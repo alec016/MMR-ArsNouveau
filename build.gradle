@@ -14,6 +14,7 @@ tasks.named('wrapper', Wrapper).configure {
 
 repositories {
   mavenLocal()
+  mavenCentral()
 }
 
 base {
@@ -64,11 +65,29 @@ configurations {
 }
 
 repositories {
+  maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
   maven {
     name = "Jared's maven"
     url = "https://maven.blamejared.com/"
     content {
       includeGroup "mezz.jei"
+      includeGroup "com.hollingsworth.ars_nouveau"
+      includeGroup "vazkii.patchouli"
+    }
+  }
+  maven {
+    name = "Illusive Soulworks maven"
+    url = "https://maven.theillusivec4.top/"
+  }
+  maven {
+    name = "OctoStudios"
+    url = uri("https://maven.octo-studios.com/releases")
+  }
+  maven {
+    name = 'GeckoLib'
+    url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    content {
+      includeGroup("software.bernie.geckolib")
     }
   }
   maven {
@@ -106,11 +125,6 @@ repositories {
       includeGroup "curse.maven"
     }
   }
-  maven {
-    name = "Covers"
-    // for rf stuffs
-    url = "https://maven.covers1624.net"
-  }
   //Needed for KubeJS
   maven {
     url 'https://jitpack.io'
@@ -118,7 +132,6 @@ repositories {
       includeGroup "com.github.rtyley"
     }
   }
-  mavenCentral()
 }
 
 dependencies {
@@ -126,6 +139,7 @@ dependencies {
   compileOnly "org.projectlombok:lombok:${project.lombok_version}"
   annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
   implementation "net.neoforged:neoforge:${neo_version}"
+  implementation ("io.github.llamalad7:mixinextras-neoforge:0.4.1")
   compileOnly localRuntime("es.degrassi:modular_machinery_reborn:${minecraft_version}-${mmr_version}")
 
   // Cloth config
@@ -143,6 +157,12 @@ dependencies {
 
   // Jade
   localRuntime compileOnly("curse.maven:jade-324717:${jade_version}")
+
+  // ARS
+  localRuntime ("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
+  localRuntime ("vazkii.patchouli:Patchouli:1.21-${project.patchouli_version}")
+  localRuntime "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
+  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.765")
 
   // Mekanism
   localRuntime("mekanism:Mekanism:${mekanism_version}")
@@ -164,7 +184,7 @@ tasks.withType(ProcessResources).configureEach {
       mod_url                : mod_url,
       icon                   : icon,
       pack_format_number     : pack_format_number,
-      mekanism_version       : mekanism_version,
+      ars_version            : ars_version,
       mmr_version            : mmr_version
   ]
   inputs.properties replaceProperties

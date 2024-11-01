@@ -1,0 +1,42 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "${mod_license}"
+[[mods]] #mandatory
+# The modid of the mod
+modId = "${mod_id}" #mandatory
+version = "${mod_version}"
+displayName = "${mod_name}"
+displayURL="${mod_url}"
+logoFile = "icon.png"
+authors="${mod_authors}"
+description = '''
+${mod_description}
+'''
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+mandatory = true
+versionRange = "[21.0.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraft_version},1.22)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "modular_machinery_reborn"
+mandatory = true
+versionRange = "[${mmr_version},)"
+ordering = "AFTER"
+
+[[dependencies.${mod_id}]]
+modId = "ars_nouveau"
+mandatory = true
+versionRange = "[${ars_version},)"
+ordering = "AFTER"

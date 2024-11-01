@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "es.degrassi.mmreborn.ars.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "KubeJSIntegrationMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
