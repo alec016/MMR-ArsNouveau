@@ -1,6 +1,7 @@
 package es.degrassi.mmreborn.ars.data;
 
 import es.degrassi.mmreborn.ModularMachineryReborn;
+import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -10,11 +11,11 @@ import net.minecraft.world.level.block.Block;
 
 public class MMRArsTags {
   private static TagKey<Block> blockTag(String name, boolean isNeoForge) {
-    return BlockTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryReborn.rl(name));
+    return BlockTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryRebornArs.rl(name));
   }
 
   private static TagKey<Item> itemTag(String name, boolean isNeoForge) {
-    return ItemTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryReborn.rl(name));
+    return ItemTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryRebornArs.rl(name));
   }
 
   private static class Tag<T> {

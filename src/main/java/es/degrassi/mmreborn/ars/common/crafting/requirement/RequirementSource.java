@@ -16,12 +16,11 @@ import es.degrassi.mmreborn.common.crafting.helper.CraftCheck;
 import es.degrassi.mmreborn.common.crafting.helper.ProcessingComponent;
 import es.degrassi.mmreborn.common.crafting.helper.RecipeCraftingContext;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
+import es.degrassi.mmreborn.common.crafting.requirement.jei.IJeiRequirement;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.common.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.util.ResultChance;
-import net.minecraft.util.Mth;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -32,9 +31,10 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
   public static final NamedCodec<RequirementSource> CODEC = NamedCodec.record(instance -> instance.group(
       NamedCodec.intRange(0, Integer.MAX_VALUE).fieldOf("source").forGetter(req -> req.required),
       NamedCodec.enumCodec(IOType.class).fieldOf("mode").forGetter(ComponentRequirement::getActionType),
-      NamedCodec.floatRange(0, 1).optionalFieldOf("chance", 1f).forGetter(req -> req.chance)
-  ).apply(instance, (source, mode, chance) -> {
-    RequirementSource requirementSource = new RequirementSource(mode, source);
+      NamedCodec.floatRange(0, 1).optionalFieldOf("chance", 1f).forGetter(req -> req.chance),
+      IJeiRequirement.POSITION_CODEC.fieldOf("position").forGetter(ComponentRequirement::getPosition)
+  ).apply(instance, (source, mode, chance, position) -> {
+    RequirementSource requirementSource = new RequirementSource(mode, source, position);
     requirementSource.setChance(chance);
     return requirementSource;
   }), "SourceRequirement");
@@ -46,12 +46,12 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
   private Integer requirementCheck;
   private boolean doesntConsumeInput;
 
-  public RequirementSource(IOType mode, Integer source) {
-    this(RequirementTypeRegistration.SOURCE.get(), mode, source);
+  public RequirementSource(IOType mode, Integer source, IJeiRequirement.JeiPositionedRequirement position) {
+    this(RequirementTypeRegistration.SOURCE.get(), mode, source, position);
   }
 
-  public RequirementSource(RequirementType<RequirementSource> type, IOType mode, Integer source) {
-    super(type, mode);
+  public RequirementSource(RequirementType<RequirementSource> type, IOType mode, Integer source, IJeiRequirement.JeiPositionedRequirement position) {
+    super(type, mode, position);
     this.required = source;
   }
 
@@ -66,13 +66,13 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
 
   @Override
   public RequirementSource deepCopy() {
-    return new RequirementSource(getActionType(), required);
+    return new RequirementSource(getActionType(), required, getPosition());
   }
 
   @Override
   public ComponentRequirement<Integer, RequirementSource> deepCopyModified(List<RecipeModifier> modifiers) {
     int amount = Math.round(RecipeModifier.applyModifiers(modifiers, this, this.required, false));
-    RequirementSource fluid = new RequirementSource(this.getActionType(), amount);
+    RequirementSource fluid = new RequirementSource(this.getActionType(), amount, getPosition());
 
     fluid.chance = RecipeModifier.applyModifiers(modifiers, this, this.chance, true);
     return fluid;

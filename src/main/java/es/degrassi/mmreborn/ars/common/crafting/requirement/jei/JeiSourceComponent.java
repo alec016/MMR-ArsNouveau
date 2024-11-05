@@ -67,36 +67,10 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
   }
 
   @Override
-  public void setRecipeInput(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
-    addSourceComponent(category, builder, category.processedInputComponents);
-    category.textsToRender.add(
-      Component.translatable(
-        "modular_machinery_reborn_ars.jei.ingredient.source.input",
-        ingredients().get(0)
-      )
-    );
-    category.updateMaxHeightOutput(this, true);
-  }
-
-  @Override
-  public void setRecipeOutput(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
-    addSourceComponent(category, builder, category.processedOutputComponents);
-    category.textsToRender.add(
-      Component.translatable(
-        "modular_machinery_reborn_ars.jei.ingredient.source.output",
-        ingredients().get(0)
-      )
-    );
-    category.updateMaxHeightOutput(this, true);
-  }
-
-  private void addSourceComponent(MMRRecipeCategory category, @NotNull IRecipeLayoutBuilder builder, List<MMRRecipeCategory.ComponentValue> processedComponents) {
-    category.updateByProcessed(processedComponents, getWidth(), getHeight(), true);
+  public void setRecipe(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
     builder
-      .addSlot(RecipeIngredientRole.RENDER_ONLY, category.x.get() + 2, category.y.get() + 2)
-      .setCustomRenderer(CustomIngredientTypes.SOURCE, this)
-      .addIngredients(CustomIngredientTypes.SOURCE, ingredients());
-    category.x.getAndAdd(category.gapX);
-    category.x.getAndAdd(getWidth());
+        .addSlot(RecipeIngredientRole.RENDER_ONLY, getPosition().x() + 1, getPosition().y() + 1)
+        .setCustomRenderer(CustomIngredientTypes.SOURCE, this)
+        .addIngredients(CustomIngredientTypes.SOURCE, ingredients());
   }
 }
