@@ -22,7 +22,7 @@ import java.util.List;
 
 public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource> {
   private int width = 14;
-  private int height = 59;
+  private int height = 14;
 
   public JeiSourceComponent(RequirementSource requirement) {
     super(requirement, 0, 0);
