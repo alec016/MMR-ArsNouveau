@@ -45,7 +45,7 @@ runs {
 
   server {
     systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    programArgument '--nogui'
+    arguments '--nogui'
   }
 
   gameTestServer {
@@ -275,6 +275,22 @@ unifiedPublishing {
                 optional "jei"
             }
         }
+    }
+
+    var MODRINTH_API_KEY = System.getenv("MODRINTH")
+    if (MODRINTH_API_KEY != null) {
+      modrinth {
+        token = MODRINTH_API_KEY
+        id = "C8tO5HS1"
+        relations {
+          depends "cloth-config"
+          depends "ars-nouveau"
+          depends "modular-machinery-reborn"
+          optional "kubejs"
+          optional "jei"
+          optional "jade"
+        }
+      }
     }
   }
 }

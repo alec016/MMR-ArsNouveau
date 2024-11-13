@@ -119,7 +119,8 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
   }
 
   @Override
-  public @NotNull CraftCheck canStartCrafting(ProcessingComponent<?> component, RecipeCraftingContext context, List<ComponentOutputRestrictor> restrictions) {
+  public @NotNull CraftCheck canStartCrafting(ProcessingComponent<?> component, RecipeCraftingContext context,
+                                              List<ComponentOutputRestrictor<?>> restrictions) {
     SourceStorage handler = (SourceStorage) component.providedComponent();
     return switch (getActionType()) {
       case INPUT -> {
@@ -134,7 +135,7 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
       case OUTPUT -> {
         handler = CopyHandlerHelper.copyTank(handler, context.getMachineController().getLevel().registryAccess());
 
-        for (ComponentOutputRestrictor restrictor : restrictions) {
+        for (ComponentOutputRestrictor<?> restrictor : restrictions) {
           if (restrictor instanceof RestrictionSource tank) {
 
             if (tank.exactComponent.equals(component)) {
