@@ -5,7 +5,6 @@ import com.hollingsworth.arsnouveau.common.capability.SourceStorage;
 import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.api.codec.NamedCodec;
 import es.degrassi.mmreborn.ars.common.crafting.helper.RestrictionSource;
-import es.degrassi.mmreborn.ars.common.crafting.requirement.jei.JeiSourceComponent;
 import es.degrassi.mmreborn.ars.common.machine.SourceHatch;
 import es.degrassi.mmreborn.ars.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.ars.common.registration.RequirementTypeRegistration;
@@ -16,7 +15,7 @@ import es.degrassi.mmreborn.common.crafting.helper.CraftCheck;
 import es.degrassi.mmreborn.common.crafting.helper.ProcessingComponent;
 import es.degrassi.mmreborn.common.crafting.helper.RecipeCraftingContext;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
-import es.degrassi.mmreborn.common.crafting.requirement.jei.IJeiRequirement;
+import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiPositionedRequirement;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.common.modifier.RecipeModifier;
@@ -32,36 +31,31 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
       NamedCodec.intRange(0, Integer.MAX_VALUE).fieldOf("source").forGetter(req -> req.required),
       NamedCodec.enumCodec(IOType.class).fieldOf("mode").forGetter(ComponentRequirement::getActionType),
       NamedCodec.floatRange(0, 1).optionalFieldOf("chance", 1f).forGetter(req -> req.chance),
-      IJeiRequirement.POSITION_CODEC.fieldOf("position").forGetter(ComponentRequirement::getPosition)
+      JeiPositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new JeiPositionedRequirement(0, 0)).forGetter(ComponentRequirement::getPosition)
   ).apply(instance, (source, mode, chance, position) -> {
     RequirementSource requirementSource = new RequirementSource(mode, source, position);
     requirementSource.setChance(chance);
     return requirementSource;
   }), "SourceRequirement");
 
-  public static final int PRIORITY_WEIGHT_SOURCE  = 10_000_000;
+  public static final int PRIORITY_WEIGHT_SOURCE = 10_000_000;
   public final Integer required;
   public float chance = 1F;
 
   private Integer requirementCheck;
   private boolean doesntConsumeInput;
 
-  public RequirementSource(IOType mode, Integer source, IJeiRequirement.JeiPositionedRequirement position) {
+  public RequirementSource(IOType mode, Integer source, JeiPositionedRequirement position) {
     this(RequirementTypeRegistration.SOURCE.get(), mode, source, position);
   }
 
-  public RequirementSource(RequirementType<RequirementSource> type, IOType mode, Integer source, IJeiRequirement.JeiPositionedRequirement position) {
+  public RequirementSource(RequirementType<RequirementSource> type, IOType mode, Integer source, JeiPositionedRequirement position) {
     super(type, mode, position);
     this.required = source;
   }
 
   public int getSortingWeight() {
     return PRIORITY_WEIGHT_SOURCE;
-  }
-
-  @Override
-  public JeiSourceComponent jeiComponent() {
-    return new JeiSourceComponent(this);
   }
 
   @Override

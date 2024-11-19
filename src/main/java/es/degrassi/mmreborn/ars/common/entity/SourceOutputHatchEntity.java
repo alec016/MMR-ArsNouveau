@@ -1,13 +1,13 @@
 package es.degrassi.mmreborn.ars.common.entity;
 
 import com.hollingsworth.arsnouveau.common.capability.SourceStorage;
-import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
-import es.degrassi.mmreborn.common.machine.IOType;
-import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.ars.common.machine.SourceHatch;
 import es.degrassi.mmreborn.ars.common.registration.EntityRegistration;
+import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
+import es.degrassi.mmreborn.common.machine.IOType;
+import es.degrassi.mmreborn.common.machine.MachineComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 

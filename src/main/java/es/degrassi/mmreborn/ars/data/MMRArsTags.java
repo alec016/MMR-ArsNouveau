@@ -30,6 +30,7 @@ public class MMRArsTags {
   }
 
   public static class Blocks extends Tag<Block> {
+    public static final TagKey<Block> SOURCE = new Blocks(false, "sourcehatch").get();
     public static final TagKey<Block> SOURCE_INPUT = new Blocks(false, "sourceinputhatch").get();
     public static final TagKey<Block> SOURCE_OUTPUT = new Blocks(false, "sourceoutputhatch").get();
 

@@ -22,12 +22,12 @@ public class DataGeneration {
     CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
     MMRBlockTagProvider blockTagProvider = generator.addProvider(
-      event.includeServer(),
-      new MMRBlockTagProvider(packOutput, lookupProvider, fileHelper)
+        event.includeServer(),
+        new MMRBlockTagProvider(packOutput, lookupProvider, fileHelper)
     );
     generator.addProvider(
-      event.includeServer(),
-      new MMRItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), fileHelper)
+        event.includeServer(),
+        new MMRItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), fileHelper)
     );
   }
 }

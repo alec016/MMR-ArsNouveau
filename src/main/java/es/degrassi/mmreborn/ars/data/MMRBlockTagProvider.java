@@ -1,8 +1,8 @@
 package es.degrassi.mmreborn.ars.data;
 
-import es.degrassi.mmreborn.data.MMRTags;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.common.registration.BlockRegistration;
+import es.degrassi.mmreborn.data.MMRTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -40,8 +40,12 @@ public class MMRBlockTagProvider extends BlockTagsProvider {
         BlockRegistration.SOURCE_OUTPUT_HATCH_VACUUM.get()
     );
 
+    tag(MMRArsTags.Blocks.SOURCE)
+        .addTag(MMRArsTags.Blocks.SOURCE_INPUT)
+        .addTag(MMRArsTags.Blocks.SOURCE_OUTPUT);
+
     tag(MMRTags.Blocks.ALL_CASINGS)
-      .addTag(MMRArsTags.Blocks.SOURCE_INPUT)
-      .addTag(MMRArsTags.Blocks.SOURCE_OUTPUT);
+        .addTag(MMRArsTags.Blocks.SOURCE_INPUT)
+        .addTag(MMRArsTags.Blocks.SOURCE_OUTPUT);
   }
 }

@@ -27,6 +27,7 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
   public JeiSourceComponent(RequirementSource requirement) {
     super(requirement, 0, 0);
   }
+
   @Override
   public int getWidth() {
     return width;
@@ -46,7 +47,7 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
   public void render(GuiGraphics guiGraphics, Integer ingredient) {
     width += 4;
     height += 4;
-    guiGraphics.blit(this.texture(), -2, -2, 0, (float)this.uOffset, (float)this.vOffset, this.getWidth(), this.getHeight(), TextureSizeHelper.getWidth(this.texture()), TextureSizeHelper.getHeight(this.texture()));
+    guiGraphics.blit(this.texture(), -2, -2, 0, (float) this.uOffset, (float) this.vOffset, this.getWidth(), this.getHeight(), TextureSizeHelper.getWidth(this.texture()), TextureSizeHelper.getHeight(this.texture()));
     width -= 4;
     height -= 4;
     SourceRenderer.renderSource(guiGraphics.pose(), height, 0, 0, width, height);

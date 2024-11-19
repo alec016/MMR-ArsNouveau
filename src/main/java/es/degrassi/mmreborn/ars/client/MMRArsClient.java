@@ -1,10 +1,13 @@
 package es.degrassi.mmreborn.ars.client;
 
+import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.ars.client.screen.SourceHatchScreen;
+import es.degrassi.mmreborn.ars.common.crafting.requirement.jei.JeiSourceComponent;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.ars.common.registration.BlockRegistration;
 import es.degrassi.mmreborn.ars.common.registration.ContainerRegistration;
 import es.degrassi.mmreborn.ars.common.registration.ItemRegistration;
+import es.degrassi.mmreborn.ars.common.registration.RequirementTypeRegistration;
 import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -15,12 +18,17 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class MMRArsClient {
   public static SourceHatchEntity getClientSideSourceHatchEntity(BlockPos pos) {
-    if(Minecraft.getInstance().level != null) {
+    if (Minecraft.getInstance().level != null) {
       BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-      if(tile instanceof SourceHatchEntity controller)
+      if (tile instanceof SourceHatchEntity controller)
         return controller;
     }
     throw new IllegalStateException("Trying to open a Source Hatch container without clicking on a Custom Machine block");
+  }
+
+  @SubscribeEvent
+  public void registerJeiComponents(final RegisterJeiComponentEvent event) {
+    event.register(RequirementTypeRegistration.SOURCE.get(), JeiSourceComponent::new);
   }
 
   @SubscribeEvent
@@ -31,7 +39,7 @@ public class MMRArsClient {
   @SubscribeEvent
   public void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
     event.register(
-      ModularMachineryRebornClient::blockColor,
+        ModularMachineryRebornClient::blockColor,
 
         BlockRegistration.SOURCE_INPUT_HATCH_TINY.get(),
         BlockRegistration.SOURCE_INPUT_HATCH_SMALL.get(),
@@ -56,7 +64,7 @@ public class MMRArsClient {
   @SubscribeEvent
   public void registerItemColors(final RegisterColorHandlersEvent.Item event) {
     event.register(
-      ModularMachineryRebornClient::itemColor,
+        ModularMachineryRebornClient::itemColor,
 
         ItemRegistration.SOURCE_INPUT_HATCH_TINY.get(),
         ItemRegistration.SOURCE_INPUT_HATCH_SMALL.get(),

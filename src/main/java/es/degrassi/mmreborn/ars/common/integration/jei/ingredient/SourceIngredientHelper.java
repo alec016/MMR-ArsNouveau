@@ -11,40 +11,40 @@ import org.jetbrains.annotations.Nullable;
 
 public class SourceIngredientHelper implements IIngredientHelper<Integer> {
 
-    @Override
-    public IIngredientType<Integer> getIngredientType() {
-        return CustomIngredientTypes.SOURCE;
-    }
+  @Override
+  public IIngredientType<Integer> getIngredientType() {
+    return CustomIngredientTypes.SOURCE;
+  }
 
-    @Override
-    public String getDisplayName(Integer source) {
-        return Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source", source).getString();
-    }
+  @Override
+  public String getDisplayName(Integer source) {
+    return Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source", source).getString();
+  }
 
-    //Safe to remove
-    @SuppressWarnings("removal")
-    @Override
-    public String getUniqueId(Integer source, UidContext context) {
-        return "" + source;
-    }
+  //Safe to remove
+  @SuppressWarnings("removal")
+  @Override
+  public String getUniqueId(Integer source, UidContext context) {
+    return "" + source;
+  }
 
-    @Override
-    public Object getUid(Integer source, UidContext context) {
-        return "" + source;
-    }
+  @Override
+  public Object getUid(Integer source, UidContext context) {
+    return "" + source;
+  }
 
-    @Override
-    public Integer copyIngredient(Integer source) {
-        return source.intValue();
-    }
+  @Override
+  public Integer copyIngredient(Integer source) {
+    return source.intValue();
+  }
 
-    @Override
-    public String getErrorInfo(@Nullable Integer source) {
-        return "";
-    }
+  @Override
+  public String getErrorInfo(@Nullable Integer source) {
+    return "";
+  }
 
-    @Override
-    public ResourceLocation getResourceLocation(Integer ingredient) {
-        return ModularMachineryRebornArs.rl("source");
-    }
+  @Override
+  public ResourceLocation getResourceLocation(Integer ingredient) {
+    return ModularMachineryRebornArs.rl("source");
+  }
 }
