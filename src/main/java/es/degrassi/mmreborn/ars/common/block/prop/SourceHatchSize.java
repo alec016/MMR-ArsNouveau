@@ -51,7 +51,7 @@ public enum SourceHatchSize implements StringRepresentable {
 
   public static void loadFromConfig() {
     for (SourceHatchSize size : values()) {
-      size.size = MMRConfig.get().sourceHatch.sourceSize(size);
+      size.size = MMRConfig.get().sourceSize(size);
     }
   }
 
