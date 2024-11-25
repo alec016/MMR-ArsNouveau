@@ -3,6 +3,7 @@ package es.degrassi.mmreborn.ars.common.crafting.requirement.jei;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.util.SourceRenderer;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
+import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
 import es.degrassi.mmreborn.common.crafting.MachineRecipe;
 import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiComponent;
 import es.degrassi.mmreborn.common.integration.jei.category.MMRRecipeCategory;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource> {
+public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource> implements SourceRendering {
   private int width = 14;
   private int height = 14;
 
@@ -50,7 +51,7 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
     guiGraphics.blit(this.texture(), -2, -2, 0, (float) this.uOffset, (float) this.vOffset, this.getWidth(), this.getHeight(), TextureSizeHelper.getWidth(this.texture()), TextureSizeHelper.getHeight(this.texture()));
     width -= 4;
     height -= 4;
-    SourceRenderer.renderSource(guiGraphics.pose(), height, 0, 0, width, height);
+    renderSource(guiGraphics, width, height);
   }
 
   @Override

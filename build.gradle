@@ -132,6 +132,13 @@ repositories {
       includeGroup "com.github.rtyley"
     }
   }
+  maven {
+    name = "TerraformersMC"
+    url = "https://maven.terraformersmc.com/"
+    content {
+      includeGroup "dev.emi"
+    }
+  }
 }
 
 dependencies {
@@ -148,6 +155,10 @@ dependencies {
   // JEI
   compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
   compileOnly localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+
+  // EMI
+  compileOnly("dev.emi:emi-neoforge:${emi_version}+${minecraft_version}:api")
+  compileOnly runtimeOnly("dev.emi:emi-neoforge:${emi_version}+${minecraft_version}")
 
   // KubeJS
   localRuntime compileOnly("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")

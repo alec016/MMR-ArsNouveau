@@ -1,7 +1,9 @@
 package es.degrassi.mmreborn.ars.client;
 
+import es.degrassi.mmreborn.api.integration.emi.RegisterEmiComponentEvent;
 import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.ars.client.screen.SourceHatchScreen;
+import es.degrassi.mmreborn.ars.common.crafting.requirement.emi.EmiSourceComponent;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.jei.JeiSourceComponent;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.ars.common.registration.BlockRegistration;
@@ -29,6 +31,11 @@ public class MMRArsClient {
   @SubscribeEvent
   public void registerJeiComponents(final RegisterJeiComponentEvent event) {
     event.register(RequirementTypeRegistration.SOURCE.get(), JeiSourceComponent::new);
+  }
+
+  @SubscribeEvent
+  public void registerEmiComponents(final RegisterEmiComponentEvent event) {
+    event.register(RequirementTypeRegistration.SOURCE.get(), EmiSourceComponent::new);
   }
 
   @SubscribeEvent
