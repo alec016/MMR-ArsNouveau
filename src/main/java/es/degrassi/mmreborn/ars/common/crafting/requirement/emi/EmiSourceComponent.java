@@ -4,6 +4,7 @@ import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.EmiComponent;
+import es.degrassi.mmreborn.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,7 @@ import java.util.List;
 public class EmiSourceComponent extends EmiComponent<Integer, RequirementSource> implements SourceRendering {
   private int width = 14;
   private int height = 14;
+
   public EmiSourceComponent(RequirementSource requirement) {
     super(requirement, 0, 0);
   }
@@ -45,7 +47,17 @@ public class EmiSourceComponent extends EmiComponent<Integer, RequirementSource>
   public List<Component> getTooltip() {
     List<Component> tooltip = super.getTooltip();
     String mode = requirement.getActionType().isInput() ? "input" : "output";
-    tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source." + mode, requirement.required));
+    float chance = requirement.chance;
+    String chanceS = Utils.decimalFormatWithPercentage(chance * 100);
+    if (chance == 1)
+      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source." + mode, requirement.required));
+    else {
+      if (chance == 0)
+        tooltip.add(Component.translatable("modular_machinery_reborn.ingredient.chance.not_consumed"));
+      else if (chance > 0 && chance < 1)
+        tooltip.add(Component.translatable("modular_machinery_reborn.ingredient.chance." + mode, chanceS, ""));
+      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source.amount", requirement.required));
+    }
     return tooltip;
   }
 

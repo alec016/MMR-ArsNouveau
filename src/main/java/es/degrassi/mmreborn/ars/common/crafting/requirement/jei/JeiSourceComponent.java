@@ -1,14 +1,14 @@
 package es.degrassi.mmreborn.ars.common.crafting.requirement.jei;
 
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
-import es.degrassi.mmreborn.ars.client.util.SourceRenderer;
-import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
 import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
+import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
 import es.degrassi.mmreborn.common.crafting.MachineRecipe;
 import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiComponent;
 import es.degrassi.mmreborn.common.integration.jei.category.MMRRecipeCategory;
 import es.degrassi.mmreborn.common.integration.jei.ingredient.CustomIngredientTypes;
 import es.degrassi.mmreborn.common.util.TextureSizeHelper;
+import es.degrassi.mmreborn.common.util.Utils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -64,7 +64,17 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
   public @NotNull List<Component> getTooltip(@NotNull Integer ingredient, @NotNull TooltipFlag tooltipFlag) {
     List<Component> tooltip = super.getTooltip(ingredient, tooltipFlag);
     String mode = requirement.getActionType().isInput() ? "input" : "output";
-    tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source." + mode, ingredient));
+    float chance = requirement.chance;
+    String chanceS = Utils.decimalFormatWithPercentage(chance * 100);
+    if (chance == 1)
+      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source." + mode, requirement.required));
+    else {
+      if (chance == 0)
+        tooltip.add(Component.translatable("modular_machinery_reborn.ingredient.chance.not_consumed"));
+      else if (chance > 0 && chance < 1)
+        tooltip.add(Component.translatable("modular_machinery_reborn.ingredient.chance." + mode, chanceS, ""));
+      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source.amount", requirement.required));
+    }
     return tooltip;
   }
 

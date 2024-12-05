@@ -59,6 +59,7 @@
 
   "modular_machinery_reborn_ars.jei.ingredient.source.input": "Require: %s source",
   "modular_machinery_reborn_ars.jei.ingredient.source.output": "Produce: %s source",
+  "modular_machinery_reborn_ars.jei.ingredient.source.amount": "%s source",
 
   "modular_machinery_reborn_ars.connections.send": "Machine set to send to %s",
   "modular_machinery_reborn_ars.connections.take": "Machine set to take from %s",

@@ -8,19 +8,39 @@ import es.degrassi.mmreborn.common.machine.IOType;
 
 public interface SourceRequirementJS extends RecipeJSBuilder {
 
+  default MachineRecipeBuilderJS requireSource(Integer stack, float chance, int x, int y) {
+    RequirementSource requirement = new RequirementSource(IOType.INPUT, stack, new PositionedRequirement(x, y));
+    requirement.setChance(chance);
+    return addRequirement(requirement);
+  }
+
+  default MachineRecipeBuilderJS produceSource(Integer stack, float chance, int x, int y) {
+    RequirementSource requirement = new RequirementSource(IOType.OUTPUT, stack, new PositionedRequirement(x, y));
+    requirement.setChance(chance);
+    return addRequirement(requirement);
+  }
+
+  default MachineRecipeBuilderJS requireSource(Integer stack, float chance) {
+    return requireSource(stack, chance, 0, 0);
+  }
+
+  default MachineRecipeBuilderJS produceSource(Integer stack, float chance) {
+    return produceSource(stack, chance, 0, 0);
+  }
+
   default MachineRecipeBuilderJS requireSource(Integer stack, int x, int y) {
-    return addRequirement(new RequirementSource(IOType.INPUT, stack, new PositionedRequirement(x, y)));
+    return requireSource(stack, 1, x, y);
   }
 
   default MachineRecipeBuilderJS produceSource(Integer stack, int x, int y) {
-    return addRequirement(new RequirementSource(IOType.OUTPUT, stack, new PositionedRequirement(x, y)));
+    return produceSource(stack, 1, x, y);
   }
 
   default MachineRecipeBuilderJS requireSource(Integer stack) {
-    return requireSource(stack, 0, 0);
+    return requireSource(stack, 1, 0, 0);
   }
 
   default MachineRecipeBuilderJS produceSource(Integer stack) {
-    return produceSource(stack, 0, 0);
+    return produceSource(stack, 1, 0, 0);
   }
 }

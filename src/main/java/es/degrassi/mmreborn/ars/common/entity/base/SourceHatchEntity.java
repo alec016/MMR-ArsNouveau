@@ -252,6 +252,10 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
     }
   }
 
+  private ParticleColor getParticleColor() {
+    return ParticleColor.defaultParticleColor();
+  }
+
   @Override
   public void doRestrictedTick() {
     if(level == null || level.isClientSide)
@@ -270,42 +274,23 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
 
       if (level.getCapability(CapabilityRegistry.SOURCE_CAPABILITY, fromPos, null) instanceof ISourceCap handler) {
         if (transferSource(handler, getTank()) > 0) {
-          ParticleUtil.spawnFollowProjectile(level, fromPos, worldPosition);
+          ParticleUtil.spawnFollowProjectile(level, fromPos, worldPosition, getParticleColor());
         }
         return;
       }
 
       if (level.getBlockEntity(fromPos) instanceof SourceHatchEntity from) {
         if (transferSource(from.tank, getTank()) > 0) {
-          ParticleUtil.spawnFollowProjectile(level, fromPos, worldPosition);
+          ParticleUtil.spawnFollowProjectile(level, fromPos, worldPosition, getParticleColor());
         }
         return;
       }
 
       if (level.getBlockEntity(fromPos) instanceof AbstractSourceMachine from) {
         if (transferSource(from.getSourceStorage(), getTank()) > 0) {
-          ParticleUtil.spawnFollowProjectile(level, fromPos, worldPosition);
+          ParticleUtil.spawnFollowProjectile(level, fromPos, worldPosition, getParticleColor());
         }
       }
-
-      // Block has been removed
-//      if (!(level.getBlockEntity(fromPos) instanceof AbstractSourceMachine)) {
-//        if ((level.getBlockEntity(getFromPos()) instanceof SourceHatchEntity tile)) {
-//          if (transferSource(tile, this) > 0) {
-//            ParticleUtil.spawnFollowProjectile(getLevel(), getFromPos(), getBlockPos());
-//          }
-//          markForUpdate();
-//          return;
-//        }
-//        setFromPos(null);
-//        markForUpdate();
-//      } else if (level.getBlockEntity(getFromPos()) instanceof AbstractSourceMachine fromTile) {
-//        // Transfer mana fromPos to this
-//        if (transferSource(fromTile, this) > 0) {
-//          markForUpdate();
-//          ParticleUtil.spawnFollowProjectile(getLevel(), getFromPos(), getBlockPos());
-//        }
-//      }
     }
 
     if (toPos != null && level.isLoaded(toPos)) {
@@ -320,42 +305,24 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
 
       if (level.getCapability(CapabilityRegistry.SOURCE_CAPABILITY, toPos, null) instanceof ISourceCap handler) {
         if (transferSource(handler, getTank()) > 0) {
-          ParticleUtil.spawnFollowProjectile(level, worldPosition, toPos);
+          ParticleUtil.spawnFollowProjectile(level, worldPosition, toPos, getParticleColor());
         }
         return;
       }
 
       if (level.getBlockEntity(toPos) instanceof SourceHatchEntity from) {
         if (transferSource(from.tank, getTank()) > 0) {
-          ParticleUtil.spawnFollowProjectile(level, worldPosition, toPos);
+          ParticleUtil.spawnFollowProjectile(level, worldPosition, toPos, getParticleColor());
         }
         return;
       }
 
       if (level.getBlockEntity(toPos) instanceof AbstractSourceMachine from) {
         if (transferSource(from.getSourceStorage(), getTank()) > 0) {
-          ParticleUtil.spawnFollowProjectile(level, worldPosition, toPos);
+          ParticleUtil.spawnFollowProjectile(level, worldPosition, toPos, getParticleColor());
         }
       }
     }
-
-//    if (getToPos() != null && level.isLoaded(getToPos())) {
-//      if (!(level.getBlockEntity(getToPos()) instanceof AbstractSourceMachine toTile)) {
-//        if ((level.getBlockEntity(getToPos()) instanceof SourceHatchEntity tile)) {
-//          if (transferSource(tile, this) > 0) {
-//            ParticleUtil.spawnFollowProjectile(level, getToPos(), getBlockPos());
-//          }
-//          markForUpdate();
-//          return;
-//        }
-//        setToPos(null);
-//        markForUpdate();
-//        return;
-//      }
-//      if (transferSource(this, toTile) > 0) {
-//        ParticleUtil.spawnFollowProjectile(level, getBlockPos(), getToPos());
-//      }
-//    }
   }
 
   @Override
@@ -376,12 +343,6 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
   @Override
   public int getMaxSource() {
     return tank.getMaxSource();
-  }
-
-  @Override
-  public void setMaxSource(int max) {
-    this.tank.setMaxSource(max);
-    this.tank.onContentsChanged();
   }
 
   @Override
