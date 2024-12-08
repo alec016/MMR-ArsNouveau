@@ -8,7 +8,6 @@ import es.degrassi.mmreborn.ars.common.crafting.helper.RestrictionSource;
 import es.degrassi.mmreborn.ars.common.machine.SourceHatch;
 import es.degrassi.mmreborn.ars.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.ars.common.registration.RequirementTypeRegistration;
-import es.degrassi.mmreborn.ars.common.util.CopyHandlerHelper;
 import es.degrassi.mmreborn.common.crafting.helper.ComponentOutputRestrictor;
 import es.degrassi.mmreborn.common.crafting.helper.ComponentRequirement;
 import es.degrassi.mmreborn.common.crafting.helper.CraftCheck;
@@ -20,6 +19,7 @@ import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.common.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.util.ResultChance;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -40,6 +40,7 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
 
   public static final int PRIORITY_WEIGHT_SOURCE = 10_000_000;
   public final Integer required;
+  @Getter
   public float chance = 1F;
 
   private Integer requirementCheck;
@@ -120,15 +121,13 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
       case INPUT -> {
         if (handler.extractSource(this.requirementCheck, true) < this.requirementCheck)
           yield CraftCheck.failure("craftcheck.failure.source.input");
-        int extracted = handler.extractSource(this.requirementCheck, false);
+        int extracted = handler.extractSource(this.requirementCheck, true);
         this.requirementCheck -= extracted;
         if (this.requirementCheck <= 0)
           yield CraftCheck.success();
         yield CraftCheck.failure("craftcheck.failure.source.input");
       }
       case OUTPUT -> {
-        handler = CopyHandlerHelper.copyTank(handler, context.getMachineController().getLevel().registryAccess());
-
         for (ComponentOutputRestrictor<?> restrictor : restrictions) {
           if (restrictor instanceof RestrictionSource tank) {
 
@@ -138,7 +137,7 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
           }
         }
 
-        int filled = handler.receiveSource(requirementCheck, false);
+        int filled = handler.receiveSource(requirementCheck, true);
         boolean didFill = filled >= this.requirementCheck;
         if (didFill) {
           context.addRestriction(new RestrictionSource(this.requirementCheck, component));

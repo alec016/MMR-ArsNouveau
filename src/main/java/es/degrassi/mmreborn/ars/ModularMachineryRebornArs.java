@@ -18,6 +18,7 @@ import es.degrassi.mmreborn.common.block.prop.FluidHatchSize;
 import es.degrassi.mmreborn.common.block.prop.ItemBusSize;
 import es.degrassi.mmreborn.common.data.Config;
 import es.degrassi.mmreborn.common.util.MMRLogger;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,13 +47,6 @@ public class ModularMachineryRebornArs {
 
   public ModularMachineryRebornArs(final ModContainer CONTAINER, final IEventBus MOD_BUS) {
     CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec());
-//    ConfigHolder<MMRConfig> config = AutoConfig.register(MMRConfig.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
-
-//    config.registerSaveListener((holder, mmrConfig) -> {
-//      SourceHatchSize.loadFromConfig();
-//      return InteractionResult.SUCCESS;
-//    });
-
     Registration.register(MOD_BUS);
 
     MOD_BUS.addListener(this::commonSetup);
@@ -85,7 +79,7 @@ public class ModularMachineryRebornArs {
         ItemStack stack = player.getItemInHand(event.getHand());
         DominionWandData data = stack.getOrDefault(DataComponentRegistry.DOMINION_WAND.get(), new DominionWandData());
         if (!data.hasStoredData()) {
-          data = data.storePos(event.getPos().immutable());
+          data = data.storePos(new GlobalPos(event.getLevel().dimension(), event.getPos().immutable()));
           if (data.strict()) data = data.setFace(event.getFace());
           stack.set(DataComponentRegistry.DOMINION_WAND.get(), data);
           PortUtil.sendMessage(player, Component.translatable("ars_nouveau.dominion_wand.position_set"));
@@ -93,7 +87,7 @@ public class ModularMachineryRebornArs {
           event.setCanceled(true);
           return;
         }
-        if (data.storedPos().isPresent() && player.getCommandSenderWorld().getBlockEntity(data.storedPos().get()) instanceof IWandable wandable) {
+        if (data.storedPos().isPresent() && player.getCommandSenderWorld().getBlockEntity(data.storedPos().get().pos()) instanceof IWandable wandable) {
           wandable.onFinishedConnectionFirst(data.storedPos().get(), (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
         }
         tile.onFinishedConnectionLast(data.storedPos().get(), (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
