@@ -17,7 +17,7 @@ import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
-import es.degrassi.mmreborn.common.modifier.RecipeModifier;
+import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.util.ResultChance;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +65,7 @@ public class RequirementSource extends ComponentRequirement<Integer, Requirement
   }
 
   @Override
-  public ComponentRequirement<Integer, RequirementSource> deepCopyModified(List<RecipeModifier> modifiers) {
+  public RequirementSource deepCopyModified(List<RecipeModifier> modifiers) {
     int amount = Math.round(RecipeModifier.applyModifiers(modifiers, this, this.required, false));
     RequirementSource fluid = new RequirementSource(this.getActionType(), amount, getPosition());
 

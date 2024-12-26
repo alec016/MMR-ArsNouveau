@@ -1,17 +1,23 @@
 package es.degrassi.mmreborn.ars.common.crafting.requirement.jei;
 
+import com.mojang.datafixers.util.Pair;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
 import es.degrassi.mmreborn.common.crafting.MachineRecipe;
+import es.degrassi.mmreborn.common.crafting.requirement.PositionedSizedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiComponent;
+import es.degrassi.mmreborn.common.data.Config;
 import es.degrassi.mmreborn.common.integration.jei.category.MMRRecipeCategory;
+import es.degrassi.mmreborn.common.integration.jei.category.drawable.DrawableWrappedText;
 import es.degrassi.mmreborn.common.integration.jei.ingredient.CustomIngredientTypes;
 import es.degrassi.mmreborn.common.util.TextureSizeHelper;
 import es.degrassi.mmreborn.common.util.Utils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -80,6 +86,34 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
 
   @Override
   public void setRecipe(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
+    Component component = Component.empty();
+    String chance = Utils.decimalFormat(requirement.chance * 100);
+    if (requirement.chance > 0 && requirement.chance < 1)
+      component = Component.translatable("modular_machinery_reborn.ingredient.chance", chance, "%").withColor(Config.chanceColor);
+    else if (requirement.chance == 0)
+      component = Component.translatable("modular_machinery_reborn.ingredient.chance.nc").withColor(Config.chanceColor);
+    Font font = Minecraft.getInstance().font;
+    recipe.chanceTexts.add(
+        Pair.of(
+            new PositionedSizedRequirement(
+                getPosition().x(),
+                getPosition().y(),
+                getWidth(),
+                font.wordWrapHeight(component, getWidth())
+            ),
+            new DrawableWrappedText(List.of(component), getWidth() + 2, true)
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEX, getPosition().x())
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEY, getPosition().y())
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.SCALE, 0.75)
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEZ, 500)
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEX, (double) (getWidth() - 16) / 2)
+                .transform(DrawableWrappedText.Operation.ADD, DrawableWrappedText.State.TRANSLATEX, 17)
+                .transform(DrawableWrappedText.Operation.REMOVE, DrawableWrappedText.State.TRANSLATEX, Math.min(14, font.width(component)))
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEY, (double) (getHeight() - 16) / 2)
+                .transform(DrawableWrappedText.Operation.REMOVE, DrawableWrappedText.State.TRANSLATEY, 1)
+                .transform(DrawableWrappedText.Operation.ADD, DrawableWrappedText.State.TRANSLATEY, (double) font.lineHeight * 3/2)
+        )
+    );
     builder
         .addSlot(RecipeIngredientRole.RENDER_ONLY, getPosition().x() + 1, getPosition().y() + 1)
         .setCustomRenderer(CustomIngredientTypes.SOURCE, this)

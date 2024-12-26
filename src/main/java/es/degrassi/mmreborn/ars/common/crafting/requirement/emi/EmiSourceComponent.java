@@ -3,7 +3,9 @@ package es.degrassi.mmreborn.ars.common.crafting.requirement.emi;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
+import es.degrassi.mmreborn.client.requirement.ChanceRendering;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.EmiComponent;
+import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @Getter
-public class EmiSourceComponent extends EmiComponent<Integer, RequirementSource> implements SourceRendering {
+public class EmiSourceComponent extends EmiComponent<Integer, RequirementSource> implements SourceRendering, ChanceRendering {
   private int width = 14;
   private int height = 14;
 
@@ -31,6 +33,7 @@ public class EmiSourceComponent extends EmiComponent<Integer, RequirementSource>
     width -= 4;
     height -= 4;
     renderSource(guiGraphics, width, height, 2, 2);
+    drawChance(guiGraphics, false);
   }
 
   @Override
@@ -70,5 +73,15 @@ public class EmiSourceComponent extends EmiComponent<Integer, RequirementSource>
   @NotNull
   public ResourceLocation texture() {
     return ModularMachineryRebornArs.rl("textures/gui/jeirecipeicons.png");
+  }
+
+  @Override
+  public float getChance() {
+    return requirement.getChance();
+  }
+
+  @Override
+  public IOType getActionType() {
+    return requirement.getActionType();
   }
 }
