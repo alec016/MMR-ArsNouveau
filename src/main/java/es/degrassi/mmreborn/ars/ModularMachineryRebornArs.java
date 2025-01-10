@@ -12,12 +12,7 @@ import es.degrassi.mmreborn.ars.common.data.MMRConfig;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.ars.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.ars.common.registration.Registration;
-import es.degrassi.mmreborn.client.util.EnergyDisplayUtil;
-import es.degrassi.mmreborn.common.block.prop.EnergyHatchSize;
-import es.degrassi.mmreborn.common.block.prop.FluidHatchSize;
-import es.degrassi.mmreborn.common.block.prop.ItemBusSize;
-import es.degrassi.mmreborn.common.data.Config;
-import es.degrassi.mmreborn.common.util.MMRLogger;
+import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,11 +24,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,26 +41,18 @@ public class ModularMachineryRebornArs {
     CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec());
     Registration.register(MOD_BUS);
 
-    MOD_BUS.addListener(this::commonSetup);
+    addConfig();
 
     NeoForge.EVENT_BUS.addListener(this::handleWandClick);
 
     MOD_BUS.register(new MMRArsClient());
     MOD_BUS.addListener(this::registerCapabilities);
-    MOD_BUS.addListener(this::reloadConfig);
-
-    final IEventBus GAME_BUS = NeoForge.EVENT_BUS;
-    GAME_BUS.addListener(this::onReloadStart);
   }
 
-  private void commonSetup(final FMLCommonSetupEvent event) {
-    SourceHatchSize.loadFromConfig();
-  }
-
-  private void reloadConfig(final ModConfigEvent.Reloading event) {
-    if(event.getConfig().getSpec() == MMRConfig.getSpec()) {
-      SourceHatchSize.loadFromConfig();
-    }
+  private void addConfig() {
+    ConfigLoaded.add(SourceHatchSize.class, size -> {
+      size.setSize(MMRConfig.get().sourceSize(size));
+    });
   }
 
   private void handleWandClick(final PlayerInteractEvent.RightClickBlock event) {
@@ -117,11 +101,5 @@ public class ModularMachineryRebornArs {
   @Contract("_ -> new")
   public static @NotNull ResourceLocation rl(String path) {
     return ResourceLocation.fromNamespaceAndPath(MODID, path);
-  }
-
-  private void onReloadStart(final CommandEvent event) {
-    if (event.getParseResults().getReader().getString().equals("reload") && event.getParseResults().getContext().getSource().hasPermission(2)) {
-      SourceHatchSize.loadFromConfig();
-    }
   }
 }

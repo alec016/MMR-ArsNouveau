@@ -3,8 +3,8 @@
 
   "modular_machinery_reborn.gui.title.source_hatch": "Source Hatch",
 
-  "craftcheck.failure.source.input": "No hay suficiente source de entrada!",
-  "craftcheck.failure.source.output.space": "No ha suficiente espacio para la salida de source!",
+  "craftcheck.failure.source.input": "No hay suficiente source!, %s XP pero se encontró %s source",
+  "craftcheck.failure.source.output": "No hay suficiente espacio para la salida de source!, necesario: %s, pero se encontró %s space",
 
   "component.missing.source.output": "No se ha encontrado Source Output Hatch!",
   "component.missing.source.input": "No se ha encontrado Source Input Hatch!",
@@ -57,6 +57,7 @@
   "text.autoconfig.modular_machinery_reborn.option.sourceHatch.VACUUM": "Source Hatch Vacuum",
   "text.autoconfig.modular_machinery_reborn.option.sourceHatch.VACUUM.size": "Size",
 
+  "modular_machinery_reborn_ars.jei.ingredient.source.amount": "%s source",
   "modular_machinery_reborn_ars.jei.ingredient.source.input": "Require: %s source",
   "modular_machinery_reborn_ars.jei.ingredient.source.output": "Produce: %s source",
 

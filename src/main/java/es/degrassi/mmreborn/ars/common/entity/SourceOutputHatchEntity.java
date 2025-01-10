@@ -1,19 +1,16 @@
 package es.degrassi.mmreborn.ars.common.entity;
 
-import com.hollingsworth.arsnouveau.common.capability.SourceStorage;
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
-import es.degrassi.mmreborn.ars.common.machine.SourceHatch;
+import es.degrassi.mmreborn.ars.common.machine.component.SourceComponent;
 import es.degrassi.mmreborn.ars.common.registration.EntityRegistration;
-import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
 import es.degrassi.mmreborn.common.machine.IOType;
-import es.degrassi.mmreborn.common.machine.MachineComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class SourceOutputHatchEntity extends SourceHatchEntity implements MachineComponentEntity {
+public class SourceOutputHatchEntity extends SourceHatchEntity {
 
   public SourceOutputHatchEntity(BlockPos pos, BlockState state) {
     super(EntityRegistration.SOURCE_OUTPUT_HATCH.get(), pos, state);
@@ -25,12 +22,7 @@ public class SourceOutputHatchEntity extends SourceHatchEntity implements Machin
 
   @Nullable
   @Override
-  public MachineComponent provideComponent() {
-    return new SourceHatch(IOType.OUTPUT) {
-      @Override
-      public SourceStorage getContainerProvider() {
-        return getTank();
-      }
-    };
+  public SourceComponent provideComponent() {
+    return new SourceComponent(getTank(), IOType.OUTPUT);
   }
 }

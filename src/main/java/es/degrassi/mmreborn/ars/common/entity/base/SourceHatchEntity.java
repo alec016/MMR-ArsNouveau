@@ -6,7 +6,6 @@ import com.hollingsworth.arsnouveau.api.source.AbstractSourceMachine;
 import com.hollingsworth.arsnouveau.api.source.ISourceCap;
 import com.hollingsworth.arsnouveau.api.source.ISourceTile;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
-import com.hollingsworth.arsnouveau.api.util.IWololoable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ColorPos;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -17,6 +16,7 @@ import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
+import es.degrassi.mmreborn.ars.common.machine.component.SourceComponent;
 import es.degrassi.mmreborn.ars.common.network.server.component.SUpdatePosComponentPacket;
 import es.degrassi.mmreborn.common.entity.base.BlockEntityRestrictedTick;
 import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
@@ -42,7 +42,8 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implements MachineComponentEntity, IWandable, ITooltipProvider, ISourceTile {
+public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implements MachineComponentEntity<SourceComponent>,
+    IWandable, ITooltipProvider, ISourceTile {
   private SourceStorage tank;
   private IOType ioType;
   private SourceHatchSize hatchSize;

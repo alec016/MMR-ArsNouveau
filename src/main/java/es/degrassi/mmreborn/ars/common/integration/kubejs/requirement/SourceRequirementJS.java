@@ -1,5 +1,6 @@
 package es.degrassi.mmreborn.ars.common.integration.kubejs.requirement;
 
+import es.degrassi.mmreborn.api.crafting.requirement.RecipeRequirement;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.integration.kubejs.MachineRecipeBuilderJS;
@@ -10,14 +11,12 @@ public interface SourceRequirementJS extends RecipeJSBuilder {
 
   default MachineRecipeBuilderJS requireSource(Integer stack, float chance, int x, int y) {
     RequirementSource requirement = new RequirementSource(IOType.INPUT, stack, new PositionedRequirement(x, y));
-    requirement.setChance(chance);
-    return addRequirement(requirement);
+    return addRequirement(new RecipeRequirement<>(requirement, chance));
   }
 
   default MachineRecipeBuilderJS produceSource(Integer stack, float chance, int x, int y) {
     RequirementSource requirement = new RequirementSource(IOType.OUTPUT, stack, new PositionedRequirement(x, y));
-    requirement.setChance(chance);
-    return addRequirement(requirement);
+    return addRequirement(new RecipeRequirement<>(requirement, chance));
   }
 
   default MachineRecipeBuilderJS requireSource(Integer stack, float chance) {

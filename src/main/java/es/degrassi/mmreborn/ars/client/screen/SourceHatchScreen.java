@@ -6,7 +6,6 @@ import es.degrassi.mmreborn.ars.client.util.SourceDisplayUtil;
 import es.degrassi.mmreborn.ars.client.util.SourceRenderer;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.client.screen.BaseScreen;
-import es.degrassi.mmreborn.common.util.TextureSizeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

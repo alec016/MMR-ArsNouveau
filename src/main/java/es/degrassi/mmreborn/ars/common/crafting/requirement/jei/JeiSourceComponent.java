@@ -1,9 +1,11 @@
 package es.degrassi.mmreborn.ars.common.crafting.requirement.jei;
 
 import com.mojang.datafixers.util.Pair;
+import es.degrassi.mmreborn.api.crafting.requirement.RecipeRequirement;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.RequirementSource;
+import es.degrassi.mmreborn.ars.common.machine.component.SourceComponent;
 import es.degrassi.mmreborn.common.crafting.MachineRecipe;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedSizedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiComponent;
@@ -27,11 +29,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource> implements SourceRendering {
+public class JeiSourceComponent extends JeiComponent<Integer, RecipeRequirement<SourceComponent, RequirementSource>> implements SourceRendering {
   private int width = 14;
   private int height = 14;
 
-  public JeiSourceComponent(RequirementSource requirement) {
+  public JeiSourceComponent(RecipeRequirement<SourceComponent, RequirementSource> requirement) {
     super(requirement, 0, 0);
   }
 
@@ -62,24 +64,24 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
 
   @Override
   public List<Integer> ingredients() {
-    return Lists.newArrayList(List.of(requirement.required).iterator());
+    return Lists.newArrayList(List.of(requirement.requirement().required).iterator());
   }
 
   @Override
   @SuppressWarnings("removal")
   public @NotNull List<Component> getTooltip(@NotNull Integer ingredient, @NotNull TooltipFlag tooltipFlag) {
     List<Component> tooltip = super.getTooltip(ingredient, tooltipFlag);
-    String mode = requirement.getActionType().isInput() ? "input" : "output";
-    float chance = requirement.chance;
+    String mode = requirement.requirement().getMode().isInput() ? "input" : "output";
+    float chance = requirement.chance();
     String chanceS = Utils.decimalFormatWithPercentage(chance * 100);
     if (chance == 1)
-      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source." + mode, requirement.required));
+      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source." + mode, requirement.requirement().required));
     else {
       if (chance == 0)
         tooltip.add(Component.translatable("modular_machinery_reborn.ingredient.chance.not_consumed"));
       else if (chance > 0 && chance < 1)
         tooltip.add(Component.translatable("modular_machinery_reborn.ingredient.chance." + mode, chanceS, ""));
-      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source.amount", requirement.required));
+      tooltip.add(Component.translatable("modular_machinery_reborn_ars.jei.ingredient.source.amount", requirement.requirement().required));
     }
     return tooltip;
   }
@@ -87,10 +89,10 @@ public class JeiSourceComponent extends JeiComponent<Integer, RequirementSource>
   @Override
   public void setRecipe(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
     Component component = Component.empty();
-    String chance = Utils.decimalFormat(requirement.chance * 100);
-    if (requirement.chance > 0 && requirement.chance < 1)
+    String chance = Utils.decimalFormat(requirement.chance() * 100);
+    if (requirement.chance() > 0 && requirement.chance() < 1)
       component = Component.translatable("modular_machinery_reborn.ingredient.chance", chance, "%").withColor(Config.chanceColor);
-    else if (requirement.chance == 0)
+    else if (requirement.chance() == 0)
       component = Component.translatable("modular_machinery_reborn.ingredient.chance.nc").withColor(Config.chanceColor);
     Font font = Minecraft.getInstance().font;
     recipe.chanceTexts.add(
