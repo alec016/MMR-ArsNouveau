@@ -3,8 +3,8 @@
 
   "modular_machinery_reborn.gui.title.source_hatch": "魔源仓",
 
-  "craftcheck.failure.source.input": "缺少魔源输入！",
-  "craftcheck.failure.source.output.space": "没有足够的库存空间用于输出魔源！",
+  "craftcheck.failure.source.input": "缺少魔源输入, 需要 %s 魔源,但找到 %s 魔源！",
+  "craftcheck.failure.source.output": "没有足够的空间用于魔源输出, 需要: %s 魔源,但找到 %s 魔源空余！",
 
   "component.missing.source.output": "未找到魔源输出仓！",
   "component.missing.source.input": "未找到魔源输出仓",
