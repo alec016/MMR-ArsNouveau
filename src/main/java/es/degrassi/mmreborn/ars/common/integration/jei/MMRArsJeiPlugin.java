@@ -23,6 +23,7 @@ public class MMRArsJeiPlugin implements IModPlugin {
 
   @Override
   public void registerIngredients(IModIngredientRegistration registration) {
-    registration.register(CustomIngredientTypes.SOURCE, new ArrayList<>(), new SourceIngredientHelper(), new DummyIngredientRenderer<>(), NamedCodec.INT.codec());
+    registration.register(CustomIngredientTypes.INTEGER, new ArrayList<>(), new SourceIngredientHelper(),
+        new DummyIngredientRenderer<>(), NamedCodec.INT.codec());
   }
 }

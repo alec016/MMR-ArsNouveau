@@ -6,13 +6,13 @@ import com.hollingsworth.arsnouveau.common.items.data.DominionWandData;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
-import es.degrassi.mmreborn.ars.client.MMRArsClient;
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
 import es.degrassi.mmreborn.ars.common.data.MMRConfig;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.ars.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.ars.common.registration.Registration;
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
+import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +45,6 @@ public class ModularMachineryRebornArs {
 
     NeoForge.EVENT_BUS.addListener(this::handleWandClick);
 
-    MOD_BUS.register(new MMRArsClient());
     MOD_BUS.addListener(this::registerCapabilities);
   }
 
@@ -56,6 +55,7 @@ public class ModularMachineryRebornArs {
   }
 
   private void handleWandClick(final PlayerInteractEvent.RightClickBlock event) {
+    Direction side = event.getFace();
     if (event.getEntity() instanceof ServerPlayer player && !player.isShiftKeyDown()) {
       if (player.getItemInHand(event.getHand()).getItem() instanceof DominionWand wand
           && player.level().getBlockEntity(event.getPos()) instanceof SourceHatchEntity tile) {
@@ -72,9 +72,11 @@ public class ModularMachineryRebornArs {
           return;
         }
         if (data.storedPos().isPresent() && player.getCommandSenderWorld().getBlockEntity(data.storedPos().get().pos()) instanceof IWandable wandable) {
-          wandable.onFinishedConnectionFirst(data.storedPos().get(), (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
+          wandable.onFirstConnection(data.storedPos().get(),
+              side, (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
         }
-        tile.onFinishedConnectionLast(data.storedPos().get(), (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
+        tile.onLastConnection(data.storedPos().get(), side,
+            (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
         tile.getTank().onContentsChanged();
         if (data.storedEntityId() != -1 && player.level().getEntity(data.storedEntityId()) instanceof IWandable wandable) {
           wandable.onFinishedConnectionFirst(event.getPos(), null, player);

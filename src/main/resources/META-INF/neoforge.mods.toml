@@ -40,3 +40,24 @@ modId = "ars_nouveau"
 mandatory = true
 versionRange = "[${ars_version},)"
 ordering = "AFTER"
+
+[[dependencies.${mod_id}]]
+modId="jei"
+type="optional"
+versionRange="[${jei_version},)"
+ordering="AFTER"
+side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="emi"
+type="optional"
+versionRange="[${emi_version},)"
+ordering="AFTER"
+side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="kubejs"
+type="optional"
+versionRange="[${kubejs_version},)"
+ordering="AFTER"
+side="SERVER"

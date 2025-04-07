@@ -118,7 +118,7 @@ public class JeiSourceComponent extends JeiComponent<Integer, RecipeRequirement<
     );
     builder
         .addSlot(RecipeIngredientRole.RENDER_ONLY, getPosition().x() + 1, getPosition().y() + 1)
-        .setCustomRenderer(CustomIngredientTypes.SOURCE, this)
-        .addIngredients(CustomIngredientTypes.SOURCE, ingredients());
+        .setCustomRenderer(CustomIngredientTypes.INTEGER, this)
+        .addIngredients(CustomIngredientTypes.INTEGER, ingredients());
   }
 }

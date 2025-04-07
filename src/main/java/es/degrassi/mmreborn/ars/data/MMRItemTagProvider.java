@@ -1,6 +1,8 @@
 package es.degrassi.mmreborn.ars.data;
 
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
+import es.degrassi.mmreborn.ars.common.registration.BlockRegistration;
+import es.degrassi.mmreborn.data.MMRTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -18,6 +20,33 @@ public class MMRItemTagProvider extends ItemTagsProvider {
 
   @Override
   public void addTags(HolderLookup.@NotNull Provider provider) {
+    tag(MMRArsTags.Items.SOURCE_INPUT).add(
+        BlockRegistration.SOURCE_INPUT_HATCH_TINY.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_SMALL.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_NORMAL.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_REINFORCED.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_BIG.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_HUGE.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_LUDICROUS.get().asItem(),
+        BlockRegistration.SOURCE_INPUT_HATCH_VACUUM.get().asItem()
+    );
+    tag(MMRArsTags.Items.SOURCE_OUTPUT).add(
+        BlockRegistration.SOURCE_OUTPUT_HATCH_TINY.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_SMALL.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_NORMAL.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_REINFORCED.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_BIG.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_HUGE.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_LUDICROUS.get().asItem(),
+        BlockRegistration.SOURCE_OUTPUT_HATCH_VACUUM.get().asItem()
+    );
 
+    tag(MMRArsTags.Items.SOURCE)
+        .addTag(MMRArsTags.Items.SOURCE_INPUT)
+        .addTag(MMRArsTags.Items.SOURCE_OUTPUT);
+
+    tag(MMRTags.Items.ALL_CASINGS)
+        .addTag(MMRArsTags.Items.SOURCE_INPUT)
+        .addTag(MMRArsTags.Items.SOURCE_OUTPUT);
   }
 }

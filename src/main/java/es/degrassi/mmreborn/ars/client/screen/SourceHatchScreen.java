@@ -45,7 +45,6 @@ public class SourceHatchScreen extends BaseScreen<SourceHatchContainer, SourceHa
       20,
       pxFilled
     );
-//    guiGraphics.blit(getTexture(), leftPos + 15,  topPos + 10 + 61 - pxFilled, 196, 61 - pxFilled, 20, pxFilled);
     guiGraphics.pose().popPose();
   }
 
@@ -56,7 +55,7 @@ public class SourceHatchScreen extends BaseScreen<SourceHatchContainer, SourceHa
     int offsetX = (this.width - this.getXSize()) / 2;
     int offsetZ = (this.height - this.getYSize()) / 2;
 
-    if(x >= 15 + offsetX && x <= 15 + 18 + offsetX && y >= 10 + offsetZ && y <= 10 + 44 + offsetZ) {
+    if(x >= 15 + offsetX && x <= 15 + 18 + offsetX && y >= 10 + offsetZ && y <= 10 + 61 + offsetZ) {
       long currentSource = SourceDisplayUtil.formatSourceForDisplay(entity.getTank().getSource());
       long maxSource = SourceDisplayUtil.formatSourceForDisplay(entity.getTank().getMaxSource());
 

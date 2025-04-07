@@ -24,6 +24,8 @@ import es.degrassi.mmreborn.common.machine.IOType;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -39,6 +41,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -126,7 +129,9 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
   }
 
   @Override
-  public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable LivingEntity storedEntity, Player playerEntity) {
+  public Result onFirstConnection(@Nullable GlobalPos globalPos, Direction side, @Nullable LivingEntity storedEntity,
+                                Player playerEntity) {
+    BlockPos storedPos = Optional.ofNullable(globalPos).map(GlobalPos::pos).orElse(null);
     if (
       level == null
         || storedPos == null
@@ -135,19 +140,23 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
         || (!(level.getBlockEntity(storedPos) instanceof AbstractSourceMachine)
         && !(level.getBlockEntity(storedPos) instanceof SourceHatchEntity))
     ) {
-      return;
+      return Result.NONE;
     }
     // Let relays take from us, no action needed.
     if (this.setSendTo(storedPos.immutable())) {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.send", DominionWand.getPosString(storedPos)));
       ParticleUtil.beam(storedPos, worldPosition, level);
+      return Result.SUCCESS;
     } else {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.fail"));
+      return Result.FAIL;
     }
   }
 
   @Override
-  public void onFinishedConnectionLast(@Nullable BlockPos storedPos, @Nullable LivingEntity storedEntity, Player playerEntity) {
+  public Result onLastConnection(@Nullable GlobalPos globalPos, Direction side, @Nullable LivingEntity storedEntity,
+                                 Player playerEntity) {
+    BlockPos storedPos = Optional.ofNullable(globalPos).map(GlobalPos::pos).orElse(null);
     if (
       level == null
         || storedPos == null
@@ -156,20 +165,23 @@ public abstract class SourceHatchEntity extends BlockEntityRestrictedTick implem
         || (!(level.getBlockEntity(storedPos) instanceof AbstractSourceMachine)
         && !(level.getBlockEntity(storedPos) instanceof SourceHatchEntity))
     ) {
-      return;
+      return Result.NONE;
     }
 
     if (this.setTakeFrom(storedPos.immutable())) {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.take", DominionWand.getPosString(storedPos)));
+      return Result.SUCCESS;
     } else {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.fail"));
+      return Result.FAIL;
     }
   }
 
   @Override
-  public void onWanded(Player playerEntity) {
+  public Result onClearConnections(Player playerEntity) {
     this.clearPos();
     PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.cleared"));
+    return Result.CLEAR;
   }
 
   @Override

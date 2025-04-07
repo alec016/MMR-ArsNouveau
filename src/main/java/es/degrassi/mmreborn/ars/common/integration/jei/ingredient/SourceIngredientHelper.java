@@ -13,7 +13,7 @@ public class SourceIngredientHelper implements IIngredientHelper<Integer> {
 
   @Override
   public IIngredientType<Integer> getIngredientType() {
-    return CustomIngredientTypes.SOURCE;
+    return CustomIngredientTypes.INTEGER;
   }
 
   @Override

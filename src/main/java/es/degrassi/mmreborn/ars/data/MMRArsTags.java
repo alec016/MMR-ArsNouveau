@@ -40,6 +40,9 @@ public class MMRArsTags {
   }
 
   public static class Items extends Tag<Item> {
+    public static final TagKey<Item> SOURCE = new Items(false, "sourcehatch").get();
+    public static final TagKey<Item> SOURCE_INPUT = new Items(false, "sourceinputhatch").get();
+    public static final TagKey<Item> SOURCE_OUTPUT = new Items(false, "sourceoutputhatch").get();
     private Items(boolean isNeoForge, String name) {
       super(itemTag(name, isNeoForge));
     }

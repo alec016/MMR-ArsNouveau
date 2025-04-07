@@ -76,6 +76,7 @@ repositories {
     content {
       includeGroup "mezz.jei"
       includeGroup "com.hollingsworth.ars_nouveau"
+      includeGroup "com.hollingsworth.nuggets"
       includeGroup "vazkii.patchouli"
     }
   }
@@ -143,6 +144,13 @@ repositories {
       includeGroup "dev.emi"
     }
   }
+  maven {
+    name = "AlecRepository"
+    url = 'https://maven.degrassi.es/releases'
+    content {
+      includeGroup "es.degrassi"
+    }
+  }
 }
 
 dependencies {
@@ -175,7 +183,7 @@ dependencies {
   localRuntime ("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
   localRuntime ("vazkii.patchouli:Patchouli:1.21-${project.patchouli_version}")
   localRuntime "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
-  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.856")
+  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.4.1051")
 
   // Mekanism
   localRuntime("mekanism:Mekanism:${mekanism_version}")
@@ -198,6 +206,9 @@ tasks.withType(ProcessResources).configureEach {
       icon                   : icon,
       pack_format_number     : pack_format_number,
       ars_version            : ars_version,
+      jei_version            : jei_version,
+      emi_version            : emi_version,
+      kubejs_version         : kubejs_version,
       mmr_version            : mmr_version
   ]
   inputs.properties replaceProperties
@@ -246,7 +257,11 @@ publishing {
   repositories {
     maven {
       name = 'maven'
-      url = 'D:\\local_maven'
+      url = 'https://maven.degrassi.es/releases'
+      credentials {
+        username = "Alec_016GG"
+        password = System.getenv("MAVEN_PASSWORD")
+      }
     }
   }
 }

@@ -2,6 +2,7 @@ package es.degrassi.mmreborn.ars.client;
 
 import es.degrassi.mmreborn.api.integration.emi.RegisterEmiComponentEvent;
 import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
+import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.screen.SourceHatchScreen;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.emi.EmiSourceComponent;
 import es.degrassi.mmreborn.ars.common.crafting.requirement.jei.JeiSourceComponent;
@@ -14,19 +15,14 @@ import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
+@Mod(value = ModularMachineryRebornArs.MODID, dist = Dist.CLIENT)
 public class MMRArsClient {
-  public static SourceHatchEntity getClientSideSourceHatchEntity(BlockPos pos) {
-    if (Minecraft.getInstance().level != null) {
-      BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-      if (tile instanceof SourceHatchEntity controller)
-        return controller;
-    }
-    throw new IllegalStateException("Trying to open a Source Hatch container without clicking on a Custom Machine block");
-  }
 
   @SubscribeEvent
   public void registerJeiComponents(final RegisterJeiComponentEvent event) {
@@ -91,5 +87,14 @@ public class MMRArsClient {
         ItemRegistration.SOURCE_OUTPUT_HATCH_LUDICROUS.get(),
         ItemRegistration.SOURCE_OUTPUT_HATCH_VACUUM.get()
     );
+  }
+
+  public static SourceHatchEntity getClientSideSourceHatchEntity(BlockPos pos) {
+    if (Minecraft.getInstance().level != null) {
+      BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+      if (tile instanceof SourceHatchEntity controller)
+        return controller;
+    }
+    throw new IllegalStateException("Trying to open a Source Hatch container without clicking on a Custom Machine block");
   }
 }
