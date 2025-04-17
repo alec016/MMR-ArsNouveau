@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.common.items.data.DominionWandData;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
+import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
 import es.degrassi.mmreborn.ars.common.data.MMRConfig;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
@@ -38,7 +39,8 @@ public class ModularMachineryRebornArs {
   public static final Logger LOGGER = LogManager.getLogger("Modular Machinery Reborn ArsNouveau");
 
   public ModularMachineryRebornArs(final ModContainer CONTAINER, final IEventBus MOD_BUS) {
-    CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec());
+    CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec(), String.format("%s/Ars/common.toml",
+        ModularMachineryReborn.MODID));
     Registration.register(MOD_BUS);
 
     addConfig();

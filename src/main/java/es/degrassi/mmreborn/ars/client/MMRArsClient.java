@@ -16,13 +16,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 @Mod(value = ModularMachineryRebornArs.MODID, dist = Dist.CLIENT)
 public class MMRArsClient {
+  public MMRArsClient(IEventBus bus) {
+    bus.register(this);
+  }
 
   @SubscribeEvent
   public void registerJeiComponents(final RegisterJeiComponentEvent event) {
