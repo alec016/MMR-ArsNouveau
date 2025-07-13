@@ -1,0 +1,71 @@
+{
+  "itemGroup.modular_machinery_reborn_ars.group": "Modular Machinery Reborn ArsNouveau",
+
+  "modular_machinery_reborn.gui.title.source_hatch": "Escotilha de Source",
+
+  "craftcheck.failure.source.input": "Source insuficiente! Necessário: %s, mas encontrado: %s",
+  "craftcheck.failure.source.output": "Espaço insuficiente para saída de Source! Necessário: %s, mas há espaço para %s",
+
+  "component.missing.source.output": "Nenhuma Escotilha de Saída de Source encontrada!",
+  "component.missing.source.input": "Nenhuma Escotilha de Entrada de Source encontrada!",
+
+  "tooltip.sourcehatch.empty": "Vazio",
+  "tooltip.sourcehatch.storage": "Armazena %s de Source",
+  "tooltip.sourcehatch.charge": "%s / %s de Source",
+
+  "block.modular_machinery_reborn_ars.sourceinputhatch_tiny": "Escotilha de Entrada de Source Minúscula",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_small": "Escotilha de Entrada de Source Pequena",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_normal": "Escotilha de Entrada de Source Normal",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_reinforced": "Escotilha de Entrada de Source Reforçada",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_big": "Escotilha de Entrada de Source Grande",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_huge": "Escotilha de Entrada de Source Enorme",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_ludicrous": "Escotilha de Entrada de Source Absurda",
+  "block.modular_machinery_reborn_ars.sourceinputhatch_vacuum": "Escotilha de Entrada de Source a Vácuo",
+
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_tiny": "Escotilha de Saída de Source Minúscula",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_small": "Escotilha de Saída de Source Pequena",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_normal": "Escotilha de Saída de Source Normal",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_reinforced": "Escotilha de Saída de Source Reforçada",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_big": "Escotilha de Saída de Source Grande",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_huge": "Escotilha de Saída de Source Enorme",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_ludicrous": "Escotilha de Saída de Source Absurda",
+  "block.modular_machinery_reborn_ars.sourceoutputhatch_vacuum": "Escotilha de Saída de Source a Vácuo",
+
+  "text.autoconfig.modular_machinery_reborn.category.source_hatch": "Escotilha de Source",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.TINY": "Escotilha de Source Minúscula",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.TINY.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.SMALL": "Escotilha de Source Pequena",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.SMALL.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.NORMAL": "Escotilha de Source Normal",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.NORMAL.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.REINFORCED": "Escotilha de Source Reforçada",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.REINFORCED.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.BIG": "Escotilha de Source Grande",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.BIG.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.HUGE": "Escotilha de Source Enorme",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.HUGE.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.LUDICROUS": "Escotilha de Source Absurda",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.LUDICROUS.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.VACUUM": "Escotilha de Source a Vácuo",
+  "text.autoconfig.modular_machinery_reborn.option.sourceHatch.VACUUM.size": "Tamanho",
+
+  "modular_machinery_reborn_ars.jei.ingredient.source.input": "Requer: %s de Source",
+  "modular_machinery_reborn_ars.jei.ingredient.source.output": "Produz: %s de Source",
+  "modular_machinery_reborn_ars.jei.ingredient.source.amount": "%s de Source",
+
+  "modular_machinery_reborn_ars.connections.send": "Máquina configurada para enviar para %s",
+  "modular_machinery_reborn_ars.connections.take": "Máquina configurada para receber de %s",
+  "modular_machinery_reborn_ars.connections.fail": "Longe demais.",
+  "modular_machinery_reborn_ars.relay.no_from": "Nenhum local de coleta configurado.",
+  "modular_machinery_reborn_ars.relay.no_to": "Nenhum local de envio configurado.",
+  "modular_machinery_reborn_ars.relay.one_from": "Coletando de %d local(is).",
+  "modular_machinery_reborn_ars.relay.one_to": "Enviando para %d local(is)."
+}
