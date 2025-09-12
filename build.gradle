@@ -104,7 +104,7 @@ repositories {
   }
   maven {
     name = "Lat's maven"
-    url = "https://maven.saps.dev/releases"
+    url = "https://maven.latvian.dev/releases"
     content {
       includeGroup "dev.latvian.mods"
       includeGroup "dev.latvian.apps"
@@ -183,7 +183,7 @@ dependencies {
   localRuntime ("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
   localRuntime ("vazkii.patchouli:Patchouli:1.21-${project.patchouli_version}")
   localRuntime "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
-  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.4.1051")
+  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.1214")
 
   // Mekanism
   localRuntime("mekanism:Mekanism:${mekanism_version}")
