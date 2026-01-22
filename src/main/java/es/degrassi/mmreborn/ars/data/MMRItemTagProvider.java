@@ -45,8 +45,7 @@ public class MMRItemTagProvider extends ItemTagsProvider {
         .addTag(MMRArsTags.Items.SOURCE_INPUT)
         .addTag(MMRArsTags.Items.SOURCE_OUTPUT);
 
-    tag(MMRTags.Items.ALL_CASINGS)
-        .addTag(MMRArsTags.Items.SOURCE_INPUT)
-        .addTag(MMRArsTags.Items.SOURCE_OUTPUT);
+    tag(MMRTags.Items.HATCHES)
+        .addTag(MMRArsTags.Items.SOURCE);
   }
 }

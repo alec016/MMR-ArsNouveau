@@ -1,5 +1,6 @@
 package es.degrassi.mmreborn.ars.common.crafting.requirement.emi;
 
+import com.hollingsworth.arsnouveau.common.capability.SourceStorage;
 import es.degrassi.mmreborn.api.crafting.requirement.RecipeRequirement;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.client.requirement.SourceRendering;
@@ -19,11 +20,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @Getter
-public class EmiSourceComponent extends EmiComponent<Integer, RecipeRequirement<SourceComponent, RequirementSource>> implements SourceRendering, ChanceRendering {
+public class EmiSourceComponent extends EmiComponent<Integer,
+    RecipeRequirement<SourceComponent, RequirementSource, SourceStorage>> implements SourceRendering, ChanceRendering {
   private int width = 14;
   private int height = 14;
 
-  public EmiSourceComponent(RecipeRequirement<SourceComponent, RequirementSource> requirement) {
+  public EmiSourceComponent(RecipeRequirement<SourceComponent, RequirementSource, SourceStorage> requirement) {
     super(requirement, 0, 0);
   }
 

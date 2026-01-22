@@ -20,7 +20,7 @@ public class SourceComponent extends MachineComponent<SourceStorage> {
   }
 
   @Override
-  public ComponentType getComponentType() {
+  public ComponentType<SourceStorage> getComponentType() {
     return ComponentRegistration.COMPONENT_SOURCE.get();
   }
 
@@ -31,7 +31,7 @@ public class SourceComponent extends MachineComponent<SourceStorage> {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <C extends MachineComponent<?>> C merge(C c) {
+  public <C extends MachineComponent<SourceStorage>> C merge(C c) {
     SourceComponent comp = (SourceComponent) c;
     return (C) new SourceComponent(
         new SourceStorage(handler.getSourceCapacity() + comp.handler.getSourceCapacity()) {

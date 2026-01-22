@@ -1,20 +1,14 @@
 plugins {
   id 'java-library'
-  id 'eclipse'
   id 'idea'
   id 'maven-publish'
-  id 'net.neoforged.gradle.userdev' version '7.0.165'
-  id "me.shedaniel.unified-publishing" version "0.1.+"
+  id 'net.neoforged.moddev' version '2.0.105'
+  id "es.degrassi.unified-publishing-with-mmr-bot" version "1+"
   id "io.freefair.lombok" version "8.6"
 }
 
 tasks.named('wrapper', Wrapper).configure {
   distributionType = Wrapper.DistributionType.BIN
-}
-
-repositories {
-  mavenLocal()
-  mavenCentral()
 }
 
 base {
@@ -25,39 +19,47 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 java.withSourcesJar()
 
-File transformer = rootProject.file("src/main/resources/META-INF/accesstransformer.cfg")
-
-if (transformer.exists()) {
-  minecraft.accessTransformers.file transformer
+tasks.processResources {
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-tasks.build {
-  finalizedBy(tasks.publishToMavenLocal)
-}
+neoForge {
+  version = project.neo_version
 
-runs {
-  configureEach {
-    systemProperty 'forge.logging.markers', 'REGISTRIES'
-    systemProperty 'forge.logging.console.level', 'debug'
-
-    modSource project.sourceSets.main
+  parchment {
+    mappingsVersion = project.parchment_mappings_version
+    minecraftVersion = project.parchment_minecraft_version
   }
 
-  client {
-    systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+  accessTransformers.from project.files('src/main/resources/META-INF/accesstransformer.cfg')
+  runs {
+    client {
+      client()
+      systemProperty "neoforge.enabledGameTestNamespaces", project.mod_id
+    }
+    server {
+      server()
+      programArgument "--nogui"
+      systemProperty "neoforge.enabledGameTestNamespaces", project.mod_id
+    }
+    gameTestServer {
+      type = "gameTestServer"
+      systemProperty "neoforge.enabledGameTestNamespaces", project.mod_id
+    }
+    data {
+      data()
+      programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    }
+    configureEach {
+      systemProperty 'forge.logging.markers', 'REGISTRIES'
+      logLevel = org.slf4j.event.Level.DEBUG
+    }
   }
 
-  server {
-    systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    arguments '--nogui'
-  }
-
-  gameTestServer {
-    systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-  }
-
-  data {
-    arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+  mods {
+    "${mod_id}" {
+      sourceSet(sourceSets.main)
+    }
   }
 }
 
@@ -66,90 +68,89 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 configurations {
   runtimeClasspath.extendsFrom localRuntime
+  libraries
+  // This will make sure that all dependencies that you add to the libraries configuration will also be added to the implementation configuration
+  // This way, you only need one dependency declaration for both runtime and compile dependencies
+  implementation.extendsFrom libraries
 }
 
 repositories {
-  maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url = "https://repo.spongepowered.org/repository/maven-public/"
+  }
+  maven {
+    name = "Forge"
+    url = "https://maven.minecraftforge.net"
+  }
   maven {
     name = "Jared's maven"
     url = "https://maven.blamejared.com/"
-    content {
-      includeGroup "mezz.jei"
-      includeGroup "com.hollingsworth.ars_nouveau"
-      includeGroup "com.hollingsworth.nuggets"
-      includeGroup "vazkii.patchouli"
-    }
+  }
+  maven {
+    name = "Shedaniel's maven"
+    url = "https://maven.shedaniel.me/"
   }
   maven {
     name = "Illusive Soulworks maven"
     url = "https://maven.theillusivec4.top/"
   }
   maven {
-    name = "OctoStudios"
-    url = uri("https://maven.octo-studios.com/releases")
-  }
-  maven {
-    name = 'GeckoLib'
-    url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-    content {
-      includeGroup("software.bernie.geckolib")
-    }
-  }
-  maven {
-    name = "Shedaniel's maven"
-    url = "https://maven.shedaniel.me/"
-    content {
-      includeGroup "me.shedaniel.cloth"
-    }
-  }
-  maven {
     name = "Lat's maven"
     url = "https://maven.latvian.dev/releases"
-    content {
-      includeGroup "dev.latvian.mods"
-      includeGroup "dev.latvian.apps"
-    }
-  }
-  maven {
-    url = "https://maven.architectury.dev"
-    content {
-      includeGroup "dev.architectury"
-    }
-  }
-  maven {
-    name = "Mod maven"
-    url = "https://modmaven.dev/"
-    content {
-      includeGroup "mcjty.theoneprobe"
-      includeGroup "mekanism"
-    }
-  }
-  maven {
-    url "https://www.cursemaven.com"
-    content {
-      includeGroup "curse.maven"
-    }
   }
   //Needed for KubeJS
   maven {
     url 'https://jitpack.io'
-    content {
-      includeGroup "com.github.rtyley"
-    }
+  }
+  maven {
+    url = "https://maven.architectury.dev"
+  }
+  maven {
+    name = "Mod maven"
+    url = "https://modmaven.dev/"
+  }
+  maven {
+    name = "CurseForge"
+    url "https://www.cursemaven.com"
+  }
+  maven {
+    name = "OctoStudios"
+    url = uri("https://maven.octo-studios.com/releases")
+  }
+  maven { // TOP
+    url "https://maven.k-4u.nl"
+  }
+  maven {
+    name = 'GeckoLib'
+    url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+  }
+  maven {
+    name = "Covers"
+    // for rf stuffs
+    url = "https://maven.covers1624.net"
   }
   maven {
     name = "TerraformersMC"
     url = "https://maven.terraformersmc.com/"
-    content {
-      includeGroup "dev.emi"
-    }
   }
   maven {
     name = "AlecRepository"
     url = 'https://maven.degrassi.es/releases'
-    content {
-      includeGroup "es.degrassi"
-    }
+  }
+  maven {
+    name = "terrarium"
+    url = 'https://maven.teamresourceful.com/repository/maven-public/'
+  }
+  // LDLib2
+  maven {
+    url = "https://maven.firstdark.dev/snapshots"
+  }
+
+  maven {
+    name = "Modrinth"
+    url = "https://api.modrinth.com/maven"
   }
 }
 
@@ -163,7 +164,7 @@ dependencies {
   compileOnly localRuntime("es.degrassi:experiencelib:${minecraft_version}-${experiencelib_version}")
 
   // ProbeJS
-  localRuntime("curse.maven:probejs-585406:5820894")
+  localRuntime("curse.maven:probejs-585406:7105159")
 
   // JEI
   compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
@@ -181,15 +182,20 @@ dependencies {
 
   // ARS
   localRuntime ("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
-  localRuntime ("vazkii.patchouli:Patchouli:1.21-${project.patchouli_version}")
+  localRuntime compileOnly ("com.hollingsworth.nuggets:nuggets-neoforge-1.21:${project.nuggets_version}")
+  localRuntime ("vazkii.patchouli:Patchouli:1.21.1-${project.patchouli_version}")
   localRuntime "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
-  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.1214")
+  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.1280")
+
+  // Athena
+  compileOnly localRuntime("earth.terrarium.athena:athena-neoforge-1.21:${athena_version}")
 
   // Mekanism
   localRuntime("mekanism:Mekanism:${mekanism_version}")
 }
 
-tasks.withType(ProcessResources).configureEach {
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
   var replaceProperties = [
       minecraft_version      : minecraft_version,
       minecraft_version_range: minecraft_version_range,
@@ -209,14 +215,17 @@ tasks.withType(ProcessResources).configureEach {
       jei_version            : jei_version,
       emi_version            : emi_version,
       kubejs_version         : kubejs_version,
-      mmr_version            : mmr_version
+      mmr_version            : mmr_version,
+      athena_version         : athena_version,
   ]
   inputs.properties replaceProperties
-
-  filesMatching(['META-INF/neoforge.mods.toml']) {
-    expand replaceProperties
-  }
+  expand replaceProperties
+  from "src/main/templates"
+  into "build/generated/sources/modMetadata"
 }
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
 
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {
@@ -278,7 +287,7 @@ idea {
   }
 }
 
-unifiedPublishing {
+unifiedPublishingWithMMRBot {
   project {
     displayName = "[NeoForge]ModularMachineyRebornArsNouveau-${minecraft_version}-${mod_version}"
     releaseType = "release"
@@ -288,18 +297,21 @@ unifiedPublishing {
     gameVersions = ["${minecraft_version}", "1.21"]
     gameLoaders = ["neoforge"]
     mainPublication jar
+    modid = mod_id
+    modVersion = "ModularMachineyRebornArs-${minecraft_version}-${mod_version}"
 
     var CURSE_API_KEY = System.getenv("CURSEFORGE")
     if (CURSE_API_KEY != null) {
         curseforge {
             token = CURSE_API_KEY
             id = "1132269"
-            gameVersions.addAll "Java 21"
             relations {
                 depends "modular-machinery-reborn"
                 depends "ars-nouveau"
+                depends "athena"
                 optional "kubejs"
                 optional "jei"
+                optional "emi"
             }
         }
     }
@@ -312,8 +324,10 @@ unifiedPublishing {
         relations {
           depends "ars-nouveau"
           depends "modular-machinery-reborn"
+          depends "athena"
           optional "kubejs"
           optional "jei"
+          optional "emi"
           optional "jade"
         }
       }

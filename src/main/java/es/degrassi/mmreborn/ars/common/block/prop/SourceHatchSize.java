@@ -1,7 +1,6 @@
 package es.degrassi.mmreborn.ars.common.block.prop;
 
 import com.hollingsworth.arsnouveau.common.capability.SourceStorage;
-import es.degrassi.mmreborn.ars.common.data.MMRConfig;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
 import es.degrassi.mmreborn.ars.common.network.server.component.SUpdateSourceComponentPacket;
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;

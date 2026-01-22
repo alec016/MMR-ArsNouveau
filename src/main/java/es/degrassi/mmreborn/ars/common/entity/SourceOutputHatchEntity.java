@@ -13,16 +13,10 @@ import javax.annotation.Nullable;
 public class SourceOutputHatchEntity extends SourceHatchEntity {
 
   public SourceOutputHatchEntity(BlockPos pos, BlockState state) {
-    super(EntityRegistration.SOURCE_OUTPUT_HATCH.get(), pos, state);
+    super(EntityRegistration.SOURCE_OUTPUT_HATCH.get(), pos, state, SourceHatchSize.TINY, IOType.OUTPUT);
   }
 
   public SourceOutputHatchEntity(BlockPos pos, BlockState state, SourceHatchSize size) {
     super(EntityRegistration.SOURCE_OUTPUT_HATCH.get(), pos, state, size, IOType.OUTPUT);
-  }
-
-  @Nullable
-  @Override
-  public SourceComponent provideComponent() {
-    return new SourceComponent(getTank(), IOType.OUTPUT);
   }
 }

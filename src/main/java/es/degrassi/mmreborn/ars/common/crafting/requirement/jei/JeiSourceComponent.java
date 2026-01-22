@@ -1,5 +1,6 @@
 package es.degrassi.mmreborn.ars.common.crafting.requirement.jei;
 
+import com.hollingsworth.arsnouveau.common.capability.SourceStorage;
 import com.mojang.datafixers.util.Pair;
 import es.degrassi.mmreborn.api.crafting.requirement.RecipeRequirement;
 import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
@@ -29,11 +30,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class JeiSourceComponent extends JeiComponent<Integer, RecipeRequirement<SourceComponent, RequirementSource>> implements SourceRendering {
+public class JeiSourceComponent extends JeiComponent<Integer,
+    RecipeRequirement<SourceComponent, RequirementSource, SourceStorage>> implements SourceRendering {
   private int width = 14;
   private int height = 14;
 
-  public JeiSourceComponent(RecipeRequirement<SourceComponent, RequirementSource> requirement) {
+  public JeiSourceComponent(RecipeRequirement<SourceComponent, RequirementSource, SourceStorage> requirement) {
     super(requirement, 0, 0);
   }
 

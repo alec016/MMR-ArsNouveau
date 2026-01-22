@@ -81,7 +81,7 @@ public class ModularMachineryRebornArs {
             (LivingEntity) player.level().getEntity(data.storedEntityId()), player);
         tile.getTank().onContentsChanged();
         if (data.storedEntityId() != -1 && player.level().getEntity(data.storedEntityId()) instanceof IWandable wandable) {
-          wandable.onFinishedConnectionFirst(event.getPos(), null, player);
+          wandable.onFirstConnection(new GlobalPos(player.level().dimension(), event.getPos()), null, null, player);
         }
         wand.clear(stack, player);
         event.setCancellationResult(InteractionResult.CONSUME);

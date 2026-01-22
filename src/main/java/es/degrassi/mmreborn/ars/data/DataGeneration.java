@@ -11,7 +11,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ModularMachineryRebornArs.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModularMachineryRebornArs.MODID)
 public class DataGeneration {
 
   @SubscribeEvent
@@ -29,5 +29,16 @@ public class DataGeneration {
         event.includeServer(),
         new MMRItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), fileHelper)
     );
+
+    generator.addProvider(
+        event.includeServer(),
+        new MMRArsLootTableProvider(packOutput, lookupProvider)
+    );
+
+    generator.addProvider(true, new MMRArsLangProvider(packOutput, "en_us"));
+    generator.addProvider(true, new MMRArsLangProvider(packOutput, "es_es"));
+    generator.addProvider(true, new MMRArsLangProvider(packOutput, "zh_cn"));
+
+    generator.addProvider(true, new MMRArsBlockStateProvider(packOutput, fileHelper));
   }
 }

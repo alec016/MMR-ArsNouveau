@@ -5,6 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 public class Registration {
   public static void register(final IEventBus bus) {
     ComponentRegistration.register(bus);
+    MachineHatchTypeRegistration.register(bus);
     CreativeTabsRegistration.register(bus);
     RequirementTypeRegistration.register(bus);
     BlockRegistration.register(bus);

@@ -10,7 +10,6 @@ import es.degrassi.mmreborn.ars.common.machine.component.SourceComponent;
 import es.degrassi.mmreborn.ars.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.ars.common.registration.RequirementTypeRegistration;
 import es.degrassi.mmreborn.common.crafting.ComponentType;
-import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.common.machine.IOType;
@@ -18,10 +17,9 @@ import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Locale;
 
-public class RequirementSource implements IRequirement<SourceComponent> {
+public class RequirementSource implements IRequirement<SourceComponent, SourceStorage> {
   public static final NamedCodec<RequirementSource> CODEC = NamedCodec.record(instance -> instance.group(
       NamedCodec.intRange(0, Integer.MAX_VALUE).fieldOf("source").forGetter(req -> req.required),
       NamedCodec.enumCodec(IOType.class).fieldOf("mode").forGetter(IRequirement::getMode),
@@ -41,12 +39,12 @@ public class RequirementSource implements IRequirement<SourceComponent> {
   }
 
   @Override
-  public RequirementType<RequirementSource> getType() {
+  public RequirementType<RequirementSource, SourceComponent, SourceStorage> getType() {
     return RequirementTypeRegistration.SOURCE.get();
   }
 
   @Override
-  public ComponentType getComponentType() {
+  public ComponentType<SourceStorage> getComponentType() {
     return ComponentRegistration.COMPONENT_SOURCE.get();
   }
 
@@ -58,6 +56,7 @@ public class RequirementSource implements IRequirement<SourceComponent> {
     return switch (mode) {
       case INPUT -> handler.extractSource(amount, true) >= amount;
       case OUTPUT -> handler.receiveSource(amount, true) >= amount;
+      case NONE -> true;
     };
   }
 
@@ -93,17 +92,6 @@ public class RequirementSource implements IRequirement<SourceComponent> {
     return CraftingResult.error(Component.translatable(
         "craftcheck.failure.source.input", amount, component.getContainerProvider().getSource()
     ));
-  }
-
-  @Override
-  public RequirementSource deepCopyModified(List<RecipeModifier> modifiers) {
-    int amount = Math.round(RecipeModifier.applyModifiers(modifiers, this.getType(), getMode(), this.required, false));
-    return new RequirementSource(this.getMode(), amount, getPosition());
-  }
-
-  @Override
-  public RequirementSource deepCopy() {
-    return new RequirementSource(getMode(), required, getPosition());
   }
 
   @Override

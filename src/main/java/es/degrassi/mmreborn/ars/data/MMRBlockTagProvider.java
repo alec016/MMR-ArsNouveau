@@ -44,8 +44,31 @@ public class MMRBlockTagProvider extends BlockTagsProvider {
         .addTag(MMRArsTags.Blocks.SOURCE_INPUT)
         .addTag(MMRArsTags.Blocks.SOURCE_OUTPUT);
 
-    tag(MMRTags.Blocks.ALL_CASINGS)
-        .addTag(MMRArsTags.Blocks.SOURCE_INPUT)
-        .addTag(MMRArsTags.Blocks.SOURCE_OUTPUT);
+    tag(MMRTags.Blocks.HATCHES)
+        .addTag(MMRArsTags.Blocks.SOURCE);
+
+    tag(MMRTags.Blocks.PLAIN_HATCHES)
+        .add(
+            BlockRegistration.SOURCE_INPUT_HATCH_TINY.get(),
+            BlockRegistration.SOURCE_INPUT_HATCH_SMALL.get(),
+            BlockRegistration.SOURCE_INPUT_HATCH_NORMAL.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_TINY.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_SMALL.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_NORMAL.get()
+        );
+
+    tag(MMRTags.Blocks.REINFORCED_HATCHES)
+        .add(
+            BlockRegistration.SOURCE_INPUT_HATCH_REINFORCED.get(),
+            BlockRegistration.SOURCE_INPUT_HATCH_BIG.get(),
+            BlockRegistration.SOURCE_INPUT_HATCH_HUGE.get(),
+            BlockRegistration.SOURCE_INPUT_HATCH_LUDICROUS.get(),
+            BlockRegistration.SOURCE_INPUT_HATCH_VACUUM.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_REINFORCED.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_BIG.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_HUGE.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_LUDICROUS.get(),
+            BlockRegistration.SOURCE_OUTPUT_HATCH_VACUUM.get()
+        );
   }
 }

@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class SourceHatchScreen extends BaseScreen<SourceHatchContainer, SourceHatchEntity> {
 
   public SourceHatchScreen(SourceHatchContainer pMenu, Inventory pPlayerInventory, Component pTitle) {
-    super(pMenu, pPlayerInventory, pTitle);
+    super(pMenu, pPlayerInventory, pTitle, true);
   }
 
   @Override
@@ -46,6 +46,7 @@ public class SourceHatchScreen extends BaseScreen<SourceHatchContainer, SourceHa
       pxFilled
     );
     guiGraphics.pose().popPose();
+    renderSlots(guiGraphics);
   }
 
   @Override

@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -46,52 +45,12 @@ public class MMRArsClient {
 
   @SubscribeEvent
   public void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
-    event.register(
-        ModularMachineryRebornClient::blockColor,
-
-        BlockRegistration.SOURCE_INPUT_HATCH_TINY.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_SMALL.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_NORMAL.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_REINFORCED.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_BIG.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_HUGE.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_LUDICROUS.get(),
-        BlockRegistration.SOURCE_INPUT_HATCH_VACUUM.get(),
-
-        BlockRegistration.SOURCE_OUTPUT_HATCH_TINY.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_SMALL.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_NORMAL.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_REINFORCED.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_BIG.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_HUGE.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_LUDICROUS.get(),
-        BlockRegistration.SOURCE_OUTPUT_HATCH_VACUUM.get()
-    );
+    BlockRegistration.BLOCKS.getEntries().forEach(block -> event.register(ModularMachineryRebornClient::blockColor, block.get()));
   }
 
   @SubscribeEvent
   public void registerItemColors(final RegisterColorHandlersEvent.Item event) {
-    event.register(
-        ModularMachineryRebornClient::itemColor,
-
-        ItemRegistration.SOURCE_INPUT_HATCH_TINY.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_SMALL.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_NORMAL.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_REINFORCED.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_BIG.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_HUGE.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_LUDICROUS.get(),
-        ItemRegistration.SOURCE_INPUT_HATCH_VACUUM.get(),
-
-        ItemRegistration.SOURCE_OUTPUT_HATCH_TINY.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_SMALL.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_NORMAL.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_REINFORCED.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_BIG.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_HUGE.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_LUDICROUS.get(),
-        ItemRegistration.SOURCE_OUTPUT_HATCH_VACUUM.get()
-    );
+    ItemRegistration.ITEMS.getEntries().forEach(item -> event.register(ModularMachineryRebornClient::itemColor, item.get()));
   }
 
   public static SourceHatchEntity getClientSideSourceHatchEntity(BlockPos pos) {
