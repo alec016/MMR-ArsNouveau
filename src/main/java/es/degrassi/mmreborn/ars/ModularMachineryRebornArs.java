@@ -61,7 +61,6 @@ public class ModularMachineryRebornArs {
     if (event.getEntity() instanceof ServerPlayer player && !player.isShiftKeyDown()) {
       if (player.getItemInHand(event.getHand()).getItem() instanceof DominionWand wand
           && player.level().getBlockEntity(event.getPos()) instanceof SourceHatchEntity tile) {
-        if (tile.getTank() == null) return;
         ItemStack stack = player.getItemInHand(event.getHand());
         DominionWandData data = stack.getOrDefault(DataComponentRegistry.DOMINION_WAND.get(), new DominionWandData());
         if (!data.hasStoredData()) {

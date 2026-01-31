@@ -2,13 +2,10 @@ package es.degrassi.mmreborn.ars.common.entity;
 
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
 import es.degrassi.mmreborn.ars.common.entity.base.SourceHatchEntity;
-import es.degrassi.mmreborn.ars.common.machine.component.SourceComponent;
 import es.degrassi.mmreborn.ars.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.common.machine.IOType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 public class SourceOutputHatchEntity extends SourceHatchEntity {
 

@@ -22,6 +22,7 @@ import es.degrassi.mmreborn.ars.ModularMachineryRebornArs;
 import es.degrassi.mmreborn.ars.common.block.prop.SourceHatchSize;
 import es.degrassi.mmreborn.ars.common.machine.component.SourceComponent;
 import es.degrassi.mmreborn.ars.common.network.server.component.SUpdatePosComponentPacket;
+import es.degrassi.mmreborn.ars.common.registration.MachineHatchTypeRegistration;
 import es.degrassi.mmreborn.ars.common.util.SourceHelper;
 import es.degrassi.mmreborn.client.integration.athena.model.hatch.HatchTextureData;
 import es.degrassi.mmreborn.common.entity.base.ColorableMachineComponentEntity;
@@ -32,9 +33,8 @@ import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
 import es.degrassi.mmreborn.common.entity.base.TextureableMachineEntity;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineHatchType;
+import es.degrassi.mmreborn.common.manager.handler.ItemHandler;
 import es.degrassi.mmreborn.common.network.server.SUpdateMachineTexturePacket;
-import es.degrassi.mmreborn.ars.common.registration.MachineHatchTypeRegistration;
-import es.degrassi.mmreborn.common.util.IOInventory;
 import es.degrassi.mmreborn.common.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -91,7 +91,7 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
   private ResourceLocation defaultOverlayTexture;
 
   @Getter
-  private final IOInventory dataComponentInventory;
+  private final ItemHandler dataComponentInventory;
 
   private final long tickOffset = Utils.RAND.nextIntBetweenInclusive(0, Integer.MAX_VALUE - 1);
   private long lastCheckTick;
@@ -278,7 +278,7 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
   }
 
   @Override
-  public Result onFirstConnection(@Nullable GlobalPos globalPos, @Nullable Direction side, @Nullable LivingEntity storedEntity, Player playerEntity) {
+  public IWandable.Result onFirstConnection(@Nullable GlobalPos globalPos, @Nullable Direction side, @Nullable LivingEntity storedEntity, Player playerEntity) {
     BlockPos storedPos = Optional.ofNullable(globalPos).map(GlobalPos::pos).orElse(null);
     if (
       level == null
@@ -288,21 +288,21 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
         || (!(level.getBlockEntity(storedPos) instanceof AbstractSourceMachine)
         && !(level.getBlockEntity(storedPos) instanceof SourceHatchEntity))
     ) {
-      return Result.NONE;
+      return IWandable.Result.NONE;
     }
     // Let relays take from us, no action needed.
     if (this.setSendTo(storedPos.immutable())) {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.send", DominionWand.getPosString(storedPos)));
       ParticleUtil.beam(storedPos, worldPosition, level);
-      return Result.SUCCESS;
+      return IWandable.Result.SUCCESS;
     } else {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.fail"));
-      return Result.FAIL;
+      return IWandable.Result.FAIL;
     }
   }
 
   @Override
-  public Result onLastConnection(@Nullable GlobalPos globalPos, @Nullable Direction side, @Nullable LivingEntity storedEntity, Player playerEntity) {
+  public IWandable.Result onLastConnection(@Nullable GlobalPos globalPos, @Nullable Direction side, @Nullable LivingEntity storedEntity, Player playerEntity) {
     BlockPos storedPos = Optional.ofNullable(globalPos).map(GlobalPos::pos).orElse(null);
     if (
       level == null
@@ -312,23 +312,23 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
         || (!(level.getBlockEntity(storedPos) instanceof AbstractSourceMachine)
         && !(level.getBlockEntity(storedPos) instanceof SourceHatchEntity))
     ) {
-      return Result.NONE;
+      return IWandable.Result.NONE;
     }
 
     if (this.setTakeFrom(storedPos.immutable())) {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.take", DominionWand.getPosString(storedPos)));
-      return Result.SUCCESS;
+      return IWandable.Result.SUCCESS;
     } else {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.fail"));
-      return Result.FAIL;
+      return IWandable.Result.FAIL;
     }
   }
 
   @Override
-  public Result onClearConnections(Player playerEntity) {
+  public IWandable.Result onClearConnections(Player playerEntity) {
     this.clearPos();
     PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.cleared"));
-    return Result.CLEAR;
+    return IWandable.Result.CLEAR;
   }
 
   @Override
