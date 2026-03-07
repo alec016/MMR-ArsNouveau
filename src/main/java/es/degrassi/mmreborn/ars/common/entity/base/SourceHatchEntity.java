@@ -290,6 +290,7 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
     ) {
       return IWandable.Result.NONE;
     }
+    if (getMode().isInput()) return IWandable.Result.FAIL;
     // Let relays take from us, no action needed.
     if (this.setSendTo(storedPos.immutable())) {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.send", DominionWand.getPosString(storedPos)));
@@ -314,7 +315,7 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
     ) {
       return IWandable.Result.NONE;
     }
-
+    if (getMode().isOutput()) return IWandable.Result.FAIL;
     if (this.setTakeFrom(storedPos.immutable())) {
       PortUtil.sendMessage(playerEntity, Component.translatable("modular_machinery_reborn_ars.connections.take", DominionWand.getPosString(storedPos)));
       return IWandable.Result.SUCCESS;
@@ -399,7 +400,6 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
 
   @Override
   public void getTooltip(List<Component> tooltip) {
-    tooltip.clear();
     if (toPos == null) {
       tooltip.add(Component.translatable("modular_machinery_reborn_ars.relay.no_to"));
     } else {

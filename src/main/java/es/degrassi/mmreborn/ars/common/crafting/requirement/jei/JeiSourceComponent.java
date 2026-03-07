@@ -70,7 +70,6 @@ public class JeiSourceComponent extends JeiComponent<Integer,
   }
 
   @Override
-  @SuppressWarnings("removal")
   public @NotNull List<Component> getTooltip(@NotNull Integer ingredient, @NotNull TooltipFlag tooltipFlag) {
     List<Component> tooltip = super.getTooltip(ingredient, tooltipFlag);
     String mode = requirement.requirement().getMode().isInput() ? "input" : "output";

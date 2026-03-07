@@ -51,9 +51,7 @@ public class ModularMachineryRebornArs {
   }
 
   private void addConfig() {
-    ConfigLoaded.add(SourceHatchSize.class, size -> {
-      size.setSize(MMRConfig.get().sourceSize(size));
-    });
+    ConfigLoaded.add(SourceHatchSize.class, size -> size.setSize(MMRConfig.get().sourceSize(size)));
   }
 
   private void handleWandClick(final PlayerInteractEvent.RightClickBlock event) {
