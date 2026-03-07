@@ -3,7 +3,7 @@ plugins {
   id 'idea'
   id 'maven-publish'
   id 'net.neoforged.moddev' version '2.0.105'
-  id "es.degrassi.unified-publishing-with-mmr-bot" version "1+"
+  id "es.degrassi.unified-publishing-with-mmr-bot" version "1.3.1"
   id "io.freefair.lombok" version "8.6"
 }
 
@@ -159,7 +159,7 @@ dependencies {
   compileOnly "org.projectlombok:lombok:${project.lombok_version}"
   annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
   implementation "net.neoforged:neoforge:${neo_version}"
-  implementation ("io.github.llamalad7:mixinextras-neoforge:0.4.1")
+  implementation ("io.github.llamalad7:mixinextras-neoforge:0.5.0")
   compileOnly localRuntime("es.degrassi:modular_machinery_reborn:${minecraft_version}-${mmr_version}")
   compileOnly localRuntime("es.degrassi:experiencelib:${minecraft_version}-${experiencelib_version}")
 
