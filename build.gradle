@@ -67,7 +67,6 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 configurations {
-  runtimeClasspath.extendsFrom localRuntime
   libraries
   // This will make sure that all dependencies that you add to the libraries configuration will also be added to the implementation configuration
   // This way, you only need one dependency declaration for both runtime and compile dependencies
@@ -160,38 +159,48 @@ dependencies {
   annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
   implementation "net.neoforged:neoforge:${neo_version}"
   implementation ("io.github.llamalad7:mixinextras-neoforge:0.5.0")
-  compileOnly localRuntime("es.degrassi:modular_machinery_reborn:${minecraft_version}-${mmr_version}")
-  compileOnly localRuntime("es.degrassi:experiencelib:${minecraft_version}-${experiencelib_version}")
+  compileOnly runtimeOnly("es.degrassi:modular_machinery_reborn:${minecraft_version}-${mmr_version}")
+  compileOnly runtimeOnly("es.degrassi:experiencelib:${minecraft_version}-${experiencelib_version}")
 
   // ProbeJS
-  localRuntime("curse.maven:probejs-585406:7105159")
+  runtimeOnly("curse.maven:probejs-585406:7105159")
 
   // JEI
   compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
-  compileOnly localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+  compileOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
   // EMI
   compileOnly("dev.emi:emi-neoforge:${emi_version}+${minecraft_version}:api")
-  compileOnly runtimeOnly("dev.emi:emi-neoforge:${emi_version}+${minecraft_version}")
+  compileOnly("dev.emi:emi-neoforge:${emi_version}+${minecraft_version}")
 
   // KubeJS
-  localRuntime compileOnly("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")
+  runtimeOnly compileOnly("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")
 
   // Jade
-  localRuntime compileOnly("curse.maven:jade-324717:${jade_version}")
+  runtimeOnly compileOnly("curse.maven:jade-324717:${jade_version}")
 
   // ARS
-  localRuntime ("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
-  localRuntime compileOnly ("com.hollingsworth.nuggets:nuggets-neoforge-1.21:${project.nuggets_version}")
-  localRuntime ("vazkii.patchouli:Patchouli:1.21.1-${project.patchouli_version}")
-  localRuntime "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
-  localRuntime compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.1280")
+  runtimeOnly ("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
+  runtimeOnly compileOnly ("com.hollingsworth.nuggets:nuggets-neoforge-1.21:${project.nuggets_version}")
+  runtimeOnly ("vazkii.patchouli:Patchouli:1.21.1-${project.patchouli_version}")
+  runtimeOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
+  runtimeOnly compileOnly ("com.hollingsworth.ars_nouveau:ars_nouveau-${project.minecraft_version}:${project.ars_version}.1280")
 
   // Athena
-  compileOnly localRuntime("earth.terrarium.athena:athena-neoforge-1.21:${athena_version}")
+  compileOnly runtimeOnly("earth.terrarium.athena:athena-neoforge-1.21:${athena_version}")
 
   // Mekanism
-  localRuntime("mekanism:Mekanism:${mekanism_version}")
+  runtimeOnly("mekanism:Mekanism:${mekanism_version}")
+
+  // setup Xei
+  switch (use_Xei) {
+    case "emi":
+      runtimeOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
+      break
+    case "jei":
+      runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+      break
+  }
 }
 
 
