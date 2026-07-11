@@ -172,7 +172,7 @@ public abstract class SourceHatchEntity extends ColorableMachineComponentEntity 
     this.toPos = null;
     this.fromPos = null;
     dataComponentInventory.deserialize(compound.getCompound("dataInventory"), provider);
-    this.defaultOverlayTexture = ModularMachineryRebornArs.rl("block/overlay_fluid" + ioType.getSerializedName() + "hatch_" + hatchSize.getSerializedName());
+    this.defaultOverlayTexture = ModularMachineryRebornArs.rl("block/overlay_source" + ioType.getSerializedName() + "hatch_" + hatchSize.getSerializedName());
 
     this.baseTexture = compound.contains("baseTexture") ? ResourceLocation.parse(compound.getString("baseTexture")) : defaultBaseTexture;
     this.overlayTexture = compound.contains("overlayTexture") ? ResourceLocation.parse(compound.getString("overlayTexture")) : defaultOverlayTexture;
